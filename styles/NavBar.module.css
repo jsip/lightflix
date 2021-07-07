@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  padding: 2.5vw;
+}
+
+.logoCont {
+  display: flex;
+}
+
+.logo {
+  width: 2.5vw;
+  height: auto;
+  margin-right: 1vw;
+}
+
+.logoText {
+  font-weight: 700;
+  color: #b4b4b4;
+}
