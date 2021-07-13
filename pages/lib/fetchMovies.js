@@ -6,6 +6,7 @@ const fetchMovies = async (url, query) => {
     const res = await fetch(`${url}${query}`);
     data = await res.json();
   }
+  console.log(data);
   return data;
 };
 

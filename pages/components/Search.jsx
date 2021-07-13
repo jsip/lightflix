@@ -1,13 +1,14 @@
 import React from "react";
 import { Input, Box, VStack, StackDivider } from "@chakra-ui/react";
 
-const Search = ({ onChangeHandler }) => {
+const Search = ({ query, onChangeHandler, placeholder }) => {
   return (
     <Box>
       <Input
         variant="filled"
-        placeholder="Search Movies"
+        placeholder={placeholder}
         onChange={onChangeHandler}
+        value={query}
       />
     </Box>
   );
