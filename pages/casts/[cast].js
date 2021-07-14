@@ -1,23 +1,23 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../components/Layout";
-import getMovieInfo from "../lib/getMovieInfo";
+import getCastInfo from "../lib/getCastInfo";
 
 export const getServerSideProps = async ({ params }) => {
-  const movieInfo = await getMovieInfo(params.movie);
+  const castInfo = await getCastInfo(params.cast);
 
   return {
     props: {
-      movieInfo,
+      castInfo,
     },
   };
 };
 
-const Cast = ({ movieInfo }) => {
+const Cast = ({ castInfo }) => {
   return (
     <Layout>
-      <Box>{movieInfo.title}</Box>
-      <Box>{movieInfo.overview}</Box>
+      <Box>{castInfo.name}</Box>
+      <Box>{castInfo.known_for_department}</Box>
     </Layout>
   );
 };

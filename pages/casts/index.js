@@ -6,28 +6,28 @@ import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
-  const movies = await fetchData(
-    `https://api.themoviedb.org/3/trending/movies/week?api_key=${API_KEY}`,
+  const casts = await fetchData(
+    `https://api.themoviedb.org/3/trending/person/week?api_key=${API_KEY}`
   );
   return {
     props: {
-      movies,
+      casts,
     },
   };
 };
 
-const Casts = ({ movies }) => {
-  const _movies = movies.results.map((movie) => {
-    let id = movie.id.toString();
+const Casts = ({ casts }) => {
+  const _casts = casts.results.map((cast) => {
+    let id = cast.id.toString();
     return (
-      <NextLink key={movie.id} href="/movies/[movie]" as={`/movies/${id}`}>
+      <NextLink key={cast.id} href="/casts/[cast]" as={`/casts/${id}`}>
         <Link>
-          <Heading>{movie.title}</Heading>
+          <Heading>{cast.name}</Heading>
         </Link>
       </NextLink>
     );
   });
-  return <Layout>{_movies}</Layout>;
+  return <Layout>{_casts}</Layout>;
 };
 
 export default Casts;

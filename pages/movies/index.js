@@ -7,7 +7,7 @@ import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
   const movies = await fetchData(
-    `https://api.themoviedb.org/3/trending/movies/week?api_key=${API_KEY}`,
+    `https://api.themoviedb.org/3/trending/movies/week?api_key=${API_KEY}`
   );
   return {
     props: {

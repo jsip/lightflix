@@ -1,24 +1,25 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../components/Layout";
-import getMovieInfo from "../lib/getMovieInfo";
+import getShowInfo from "../lib/getShowInfo";
 
 export const getServerSideProps = async ({ params }) => {
-  const movieInfo = await getMovieInfo(params.movie);
+  const showInfo = await getShowInfo(params.show);
+
   return {
     props: {
-      movieInfo,
+      showInfo,
     },
   };
 };
 
-const Genre = ({ movieInfo }) => {
+const Show = ({ showInfo }) => {
   return (
     <Layout>
-      <Box>{movieInfo.title}</Box>
-      <Box>{movieInfo.overview}</Box>
+      <Box>{showInfo.name}</Box>
+      <Box>{showInfo.overview}</Box>
     </Layout>
   );
 };
 
-export default Genre;
+export default Show;
