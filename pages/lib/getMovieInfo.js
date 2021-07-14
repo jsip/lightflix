@@ -1,8 +1,8 @@
-import fetchMovies from "./fetchMovies";
+import fetchData from "./fetchData";
 import API_KEY from "../utils/constants";
 
 const getMovieInfo = async (movieId) => {
-  const movieData = await fetchMovies(
+  const movieData = await fetchData(
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`
   );
   console.log(movieData);

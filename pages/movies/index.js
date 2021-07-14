@@ -2,13 +2,12 @@ import { Heading, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 import Layout from "../components/Layout";
-import fetchMovies from "../lib/fetchMovies";
+import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
-  const movies = await fetchMovies(
-    `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=`,
-    `die`
+  const movies = await fetchData(
+    `https://api.themoviedb.org/3/trending/movies/week?api_key=${API_KEY}`,
   );
   return {
     props: {
