@@ -7,7 +7,6 @@ const fetchData = async (url, query) => {
     const res = await fetch(`${url}`);
     data = await res.json();
   }
-  console.log(data);
   return data;
 };
 

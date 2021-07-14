@@ -1,3 +1,3 @@
-const API_KEY = "164b6b3dc59138ff5b0462a12075889a";
+const API_KEY = process.env.IMDB_API_KEY;
 
 export default API_KEY;

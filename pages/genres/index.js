@@ -6,28 +6,54 @@ import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
-  const movies = await fetchData(
-    `https://api.themoviedb.org/3/trending/movies/week?api_key=${API_KEY}`
-  );
+
+  // placeholder
+  const genres = [
+    "Horror",
+    "Comedy",
+    "Action",
+    "Adventure",
+    "Sci-Fi",
+    "Drama",
+    "Thriller",
+    "Crime",
+    "Animation",
+    "Family",
+    "Fantasy",
+    "Mystery",
+    "Western",
+    "Romance",
+    "History",
+    "War",
+    "Biography",
+    "Music",
+    "Documentary",
+    "Sport",
+    "News",
+    "Reality-TV",
+    "Game-Show",
+    "Mini-Series",
+    "Talk-Show",
+  ];
   return {
     props: {
-      movies,
+      genres,
     },
   };
 };
 
-const Genres = ({ movies }) => {
-  const _movies = movies.results.map((movie) => {
-    let id = movie.id.toString();
+const Genres = ({ genres }) => {
+  const _genres = genres.map((genre) => {
+    console.log(genre);
     return (
-      <NextLink key={movie.id} href="/movies/[movie]" as={`/movies/${id}`}>
+      <NextLink key={genre} href="/genres/[genre]" as={`/genres/${genre}`}>
         <Link>
-          <Heading>{movie.title}</Heading>
+          <Heading>{genre}</Heading>
         </Link>
       </NextLink>
     );
   });
-  return <Layout>{_movies}</Layout>;
+  return <Layout>{_genres}</Layout>;
 };
 
 export default Genres;
