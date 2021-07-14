@@ -1,5 +1,5 @@
+import { Box, Input } from "@chakra-ui/react";
 import React from "react";
-import { Input, Box, VStack, StackDivider } from "@chakra-ui/react";
 
 const Search = ({ query, onChangeHandler, placeholder }) => {
   return (

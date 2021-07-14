@@ -1,5 +1,3 @@
-import React from "react";
-
 const fetchMovies = async (url, query) => {
   let data;
   if (url) {

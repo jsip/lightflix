@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Image, Flex, Spacer, Link, Box, Input } from "@chakra-ui/react";
+import { Box, Flex, Image, Link, Spacer } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.css";
 import Search from "./Search";
 import XSMovieCard from "./XSMovieCard";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
 
 const NavBar = () => {
   const router = useRouter();
@@ -47,7 +47,9 @@ const NavBar = () => {
           query={query}
           placeholder={`Search ${path[1] || "LightFlix"}`}
         />
-        {!query ? `Search ${path[1] || "something"} to begin.` : `Searching for ${query}`}
+        {!query
+          ? `Search ${path[1] || "something"} to begin.`
+          : `Searching for ${query}`}
         <XSMovieCard query={query} clickHandler={clickHandler} />
         {/* {!isEmpty ? (
           loading ? (

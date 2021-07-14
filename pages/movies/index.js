@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import React from "react";
 import Layout from "../components/Layout";
 import fetchMovies from "../lib/fetchMovies";
-import { API_KEY } from "../utils/constants";
+import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
   const movies = await fetchMovies(

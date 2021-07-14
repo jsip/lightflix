@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Image, Link, Flex } from "@chakra-ui/react";
-import fetchMovies from "../lib/fetchMovies";
-import { API_KEY } from "../utils/constants";
+import { Flex, Image, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
+import React, { useEffect, useState } from "react";
+import fetchMovies from "../lib/fetchMovies";
+import API_KEY from "../utils/constants";
 
 const XSMovieCard = ({ query, clickHandler }) => {
   console.log(query);
