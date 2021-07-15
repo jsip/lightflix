@@ -1,13 +1,21 @@
 const checkMediaType = (useCase, queryType, data) => {
   switch (useCase) {
     case "href":
-      return queryType === "movie" || queryType === "tv"
-        ? "/movies/[movie]"
-        : "/casts/[cast]";
+      if (queryType === "movie") {
+        return "/movies/[movie]";
+      } else if (queryType === "tv") {
+        return "/shows/[show]";
+      } else {
+        return "/casts/[cast]";
+      }
     case "as":
-      return queryType === "movie" || queryType === "tv"
-        ? `/movies/${data.id}`
-        : `/casts/${data.id}`;
+      if (queryType === "movie") {
+        return `/movies/${data.id}`;
+      } else if (queryType === "tv") {
+        return `/shows/${data.id}`;
+      } else {
+        return `/casts/${data.id}`;
+      }
     case "title":
       return queryType === "movie" ? `${data.title}` : `${data.name}`;
     case "desc":

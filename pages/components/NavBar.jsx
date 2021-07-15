@@ -7,7 +7,7 @@ import SCard from "./SCard";
 import Search from "./Search";
 
 const NavBar = () => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState("" || undefined);
 
   const queryHandler = (e) => {
     if (e.target.value.trim() !== "") {

@@ -5,7 +5,7 @@ import getShowInfo from "../lib/getShowInfo";
 
 export const getServerSideProps = async ({ params }) => {
   const showInfo = await getShowInfo(params.show);
-
+  console.log(showInfo, params);
   return {
     props: {
       showInfo,
