@@ -6,35 +6,9 @@ import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
 export const getStaticProps = async () => {
-
-  // placeholder
-  const genres = [
-    "Horror",
-    "Comedy",
-    "Action",
-    "Adventure",
-    "Sci-Fi",
-    "Drama",
-    "Thriller",
-    "Crime",
-    "Animation",
-    "Family",
-    "Fantasy",
-    "Mystery",
-    "Western",
-    "Romance",
-    "History",
-    "War",
-    "Biography",
-    "Music",
-    "Documentary",
-    "Sport",
-    "News",
-    "Reality-TV",
-    "Game-Show",
-    "Mini-Series",
-    "Talk-Show",
-  ];
+  const genres = await fetchData(
+    `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+  );
   return {
     props: {
       genres,
@@ -43,12 +17,15 @@ export const getStaticProps = async () => {
 };
 
 const Genres = ({ genres }) => {
-  const _genres = genres.map((genre) => {
-    console.log(genre);
+  const _genres = genres.genres.map((genre) => {
     return (
-      <NextLink key={genre} href="/genres/[genre]" as={`/genres/${genre}`}>
+      <NextLink
+        key={genre.id}
+        href="/genres/[genre]"
+        as={`/genres/${genre.name}`}
+      >
         <Link>
-          <Heading>{genre}</Heading>
+          <Heading>{genre.name}</Heading>
         </Link>
       </NextLink>
     );

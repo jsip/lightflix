@@ -30,6 +30,9 @@ const NavBar = () => {
         </Link>
       </NextLink>
       <Spacer />
+      <Spacer />
+      <Spacer />
+      <Spacer />
       <NextLink href="/movies" rel="noopener noreferrer">
         <Link className={styles.logoCont}>
           <div className={styles.logoText}>
@@ -61,6 +64,9 @@ const NavBar = () => {
           </div>
         </Link>
       </NextLink>
+      <Spacer />
+      <Spacer />
+      <Spacer />
       <Spacer />
       <Box>
         <Search
