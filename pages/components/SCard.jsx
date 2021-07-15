@@ -14,9 +14,11 @@ const SCard = ({ query, clickHandler }) => {
     }
   }, [query, url]);
 
+	console.log(searchData);
+
   if (!searchData || !query) {
     return null;
-  } else if (searchData?.results.length === 0) {
+  } else if (searchData?.results?.length === 0) {
     return "No movies match your query";
   } else {
     return searchData?.results.map((data) => (
