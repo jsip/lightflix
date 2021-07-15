@@ -22,5 +22,8 @@ Dans ce fichier, ajouter `NEXT_PUBLIC_TMDB_API_KEY=<<API_KEY>>` (sans quotes, co
 ```
 yarn dev
 ```
+## Issues
+
+Si jamais webpack throw une erreur concernant le casing lors du bundling au run time, et que le path dans lequel le repo a été cloné passe par le desktop, essayer de voir si le D de desktop est en majuscule. Si ce n'est pas le cas, faire le changement.
 
 > Enjoy le bootleg Netflix
