@@ -19,6 +19,7 @@ const SCard = ({ query, clickHandler }) => {
   } else if (searchData?.results?.length === 0) {
     return "No movies match your query";
   } else {
+    console.log(searchData);
     return searchData?.results.map((data) => (
       <div
         key={data.id}

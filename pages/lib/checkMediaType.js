@@ -24,8 +24,8 @@ const checkMediaType = (useCase, queryType, data) => {
         : `${data.known_for_department}`;
     case "imgSrc":
       return queryType === "movie" || queryType === "tv"
-        ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-        : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+        ? !data.poster_path ? undefined : `https://image.tmdb.org/t/p/w500${data.poster_path}`
+        : !data.profile_path ? undefined : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
   }
 };
 

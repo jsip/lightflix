@@ -8,7 +8,7 @@ const Search = ({ query, onChangeHandler, placeholder }) => {
         variant="filled"
         placeholder={placeholder}
         onChange={onChangeHandler}
-        value={query}
+        value={query || ""}
       />
     </Box>
   );
