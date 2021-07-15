@@ -3,7 +3,7 @@ const checkMediaType = (useCase, queryType, data) => {
     case "href":
       return queryType === "movie" || queryType === "tv"
         ? "/movies/[movie]"
-        : "casts/[cast]";
+        : "/casts/[cast]";
     case "as":
       return queryType === "movie" || queryType === "tv"
         ? `/movies/${data.id}`

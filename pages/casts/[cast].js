@@ -5,7 +5,7 @@ import getCastInfo from "../lib/getCastInfo";
 
 export const getServerSideProps = async ({ params }) => {
   const castInfo = await getCastInfo(params.cast);
-
+  console.log(castInfo);
   return {
     props: {
       castInfo,
