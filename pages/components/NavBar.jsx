@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Link, Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useState } from "react";
-import styles from "../../styles/NavBar.module.css";
+import styles from "../../styles/NavBar.module.scss";
 import GetRouterPath from "../utils/getRouterPath";
 import SCard from "./SCard";
 import Search from "./Search";

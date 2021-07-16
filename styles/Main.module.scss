@@ -1,0 +1,19 @@
+.containerBg {
+  background: linear-gradient(
+    90deg,
+    #00ff5e23 0%,
+    rgba(76, 3, 201, 0.096) 100%
+  );
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.wrapper {
+  padding: 2em;
+}
