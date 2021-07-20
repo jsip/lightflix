@@ -75,8 +75,8 @@ const NavBar = () => {
           placeholder={`Search ${GetRouterPath() || "LightFlix"}`}
         />
         {!query
-          ? `Search ${GetRouterPath() || "something"} to begin.`
-          : `Searching for ${query}`}
+          ? `\u00A0`
+          : `Searching for ${query}...`}
         {!query ? (
           ""
         ) : (

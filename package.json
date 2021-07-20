@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.13",
-    "@chakra-ui/react": "^1.6.4",
+    "@chakra-ui/icons": "latest",
+    "@chakra-ui/react": "latest",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "framer-motion": "^4",
