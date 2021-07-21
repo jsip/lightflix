@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Image, Link, Spacer, Tag } from "@chakra-ui/react";
+import { Box, Center, Flex, Image, Link, Spacer, Tag, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import checkMediaType from "../lib/checkMediaType";
@@ -56,10 +56,10 @@ const SCard = ({ query, clickHandler }) => {
                   width: "25vw",
                 }}
               >
-                <Flex>
-                  <h3>{checkMediaType("title", data.media_type, data)}</h3>
+                <Flex mb={8}>
+                  <Heading size="md" pt={2} mr={8}>{checkMediaType("title", data.media_type, data)}</Heading>
                   <Spacer />
-                  <Tag>{data.media_type}</Tag>
+                  <Tag textTransform="capitalize">{data.media_type}</Tag>
                 </Flex>
                 <p
                   style={{

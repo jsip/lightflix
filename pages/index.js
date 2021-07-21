@@ -10,16 +10,16 @@ import getMostTrending from "./utils/getMostTrending";
 const Home = () => {
   const [trendingData, setTrendingData] = useState();
   const [mostTrending, setMostTrending] = useState();
+  const [trendingImages, setTrendingImages] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
 
   useEffect(() => {
-    getTrending(mediaType, timeframe).then((t) => {
-      setTrendingData(t);
-      let _mostTrending = getMostTrending(t.results);
-      setMostTrending(_mostTrending);
+    getTrending(mediaType, timeframe).then((trending) => {
+      setTrendingData(trending);
+      setMostTrending(getMostTrending(trending.results));
     });
-  }, [mediaType, timeframe]);
+  }, [mediaType, timeframe, trendingImages]);
 
   return (
     <Layout>
@@ -32,34 +32,37 @@ const Home = () => {
                 <Select
                   placeholder="Any Media"
                   size="md"
+                  name="mediaType"
                   variant="filled"
                   w="fit-content"
                   mr={4}
                   fontWeight="semibold"
+                  onChange={(e) => setMediaType(e.target.value || "all")}
                 >
-                  <option value="option1">Movies</option>
-                  <option value="option2">Shows</option>
-                  <option value="option3">Casts</option>
+                  <option value="movie">Movies</option>
+                  <option value="tv">Shows</option>
+                  <option value="person" disabled>
+                    Casts
+                  </option>
                 </Select>
                 <Select
                   placeholder="Any Timeframe"
+                  name="timeframe"
                   size="md"
                   w="fit-content"
                   variant="filled"
                   fontWeight="semibold"
+                  onChange={(e) => setTimeframe(e.target.value || "week")}
                 >
-                  <option value="option1">Today</option>
-                  <option value="option2">This Week</option>
+                  <option value="day">Today</option>
+                  <option value="week">This Week</option>
                 </Select>
               </Flex>
               <TCard trendingData={trendingData} />
             </GridItem>
             <GridItem colSpan={2}>
               <MTrending mostTrending={mostTrending} />
-              <Flex>
-                <Box></Box>
-                <Box></Box>
-              </Flex>
+              <Flex></Flex>
             </GridItem>
           </Grid>
         </GridItem>

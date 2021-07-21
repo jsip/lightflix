@@ -1,11 +1,21 @@
 import React from "react";
-import { Heading, Image, Text, Flex, Spacer, Wrap, WrapItem, Avatar } from "@chakra-ui/react";
+import {
+  Heading,
+  Image,
+  Text,
+  Flex,
+  Spacer,
+  Wrap,
+  WrapItem,
+  Avatar,
+} from "@chakra-ui/react";
 import checkMediaType from "../lib/checkMediaType";
 
 const MTrending = ({ mostTrending }) => {
   if (!mostTrending) {
     return null;
   } else {
+    console.log(mostTrending);
     return (
       <div>
         <div style={{ position: "relative" }}>
@@ -27,16 +37,12 @@ const MTrending = ({ mostTrending }) => {
           </Heading>
         </div>
         <Flex mt={8}>
-          <Heading size="md" pt={2} mr={8}>Cast</Heading>
+          <Heading size="md" pt={2} mr={8}>
+            Cast
+          </Heading>
           <Wrap>
             <WrapItem>
               <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-            </WrapItem>
-            <WrapItem>
-              <Avatar
-                name="Kola Tioluwani"
-                src="https://bit.ly/tioluwani-kolawole"
-              />
             </WrapItem>
             <WrapItem>
               <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
