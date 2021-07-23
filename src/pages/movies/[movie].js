@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import Layout from "../components/Layout";
-import getMovieInfo from "../lib/getMovieInfo";
+import Layout from "../../common/components/Layout";
+import getMovieInfo from "../../common/lib/getMovieInfo";
 
 export const getServerSideProps = async ({ params }) => {
   const movieInfo = await getMovieInfo(params.movie);

@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "../../common/components/Layout";
 
 export const getServerSideProps = async ({ params }) => {
   const genreInfo = params.genre;

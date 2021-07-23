@@ -1,9 +1,9 @@
 import { Heading, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
-import Layout from "../components/Layout";
-import fetchData from "../lib/fetchData";
-import API_KEY from "../utils/constants";
+import Layout from "../../common/components/Layout";
+import fetchData from "../../common/lib/fetchData";
+import API_KEY from "../../common/utils/constants";
 
 export const getStaticProps = async () => {
   const casts = await fetchData(

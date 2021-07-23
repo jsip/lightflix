@@ -1,11 +1,11 @@
-import { Box, Flex, Grid, GridItem, Heading, Select } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Heading, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import Layout from "../common/components/Layout";
+import MTrending from "../common/components/MTrending";
+import TCard from "../common/components/TCard";
+import getTrending from "../common/lib/getTrending";
+import getMostTrending from "../common/utils/getMostTrending";
 import styles from "../styles/Home.module.scss";
-import Layout from "./components/Layout";
-import MTrending from "./components/MTrending";
-import TCard from "./components/TCard";
-import getTrending from "./lib/getTrending";
-import getMostTrending from "./utils/getMostTrending";
 
 const Home = () => {
   const [trendingData, setTrendingData] = useState();
