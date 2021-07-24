@@ -4,7 +4,7 @@ import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
 import getTrending from "../common/lib/getTrending";
-import getMostTrending from "../common/utils/getMostTrending";
+import getBiggestVal from "../common/utils/getBiggestVal";
 import styles from "../styles/Home.module.scss";
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
       setTrendingData(trending);
-      setMostTrending(getMostTrending(trending.results));
+      setMostTrending(getBiggestVal(trending.results));
     });
   }, [mediaType, timeframe, trendingImages]);
 

@@ -1,4 +1,4 @@
-const getMostTrending = (obj) => {
+const getBiggestVal = (obj) => {
   let max = 0;
   let maxIndex = 0;
   for (let i = 0; i < obj.length; i++) {
@@ -10,4 +10,4 @@ const getMostTrending = (obj) => {
   return obj[maxIndex];
 };
 
-export default getMostTrending;
+export default getBiggestVal;
