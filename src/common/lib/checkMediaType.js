@@ -8,6 +8,7 @@ const checkMediaType = (useCase, queryType, data) => {
       } else {
         return "/casts/[cast]";
       }
+
     case "as":
       if (queryType === "movie") {
         return `/movies/${data.id}`;
@@ -16,16 +17,36 @@ const checkMediaType = (useCase, queryType, data) => {
       } else {
         return `/casts/${data.id}`;
       }
+
     case "title":
       return queryType === "movie" ? `${data.title}` : `${data.name}`;
+
     case "desc":
       return queryType === "movie" || queryType === "tv"
         ? `${data.overview}`
         : `${data.known_for_department}`;
+
     case "imgSrc":
-      return queryType === "movie" || queryType === "tv"
-        ? !data.poster_path ? undefined : `https://image.tmdb.org/t/p/w500${data.poster_path}`
-        : !data.profile_path ? undefined : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+      if (queryType === "movie" || queryType === "tv") {
+        return !data.poster_path
+          ? undefined
+          : `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+      } else {
+        return !data.profile_path
+          ? undefined
+          : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+      }
+
+    case "imgSrcBackdrop":
+      if (queryType === "movie" || queryType === "tv") {
+        return !data.poster_path
+          ? undefined
+          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
+      } else {
+        return !data.profile_path
+          ? undefined
+          : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+      }
   }
 };
 

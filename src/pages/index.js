@@ -1,8 +1,20 @@
-import { Flex, Grid, GridItem, Heading, Select } from "@chakra-ui/react";
+import {
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Select,
+  VStack,
+  Box,
+  Stack,
+  Image,
+  StackDivider,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
+import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
 import getMostTrending from "../common/utils/getMostTrending";
 import styles from "../styles/Home.module.scss";
@@ -10,7 +22,7 @@ import styles from "../styles/Home.module.scss";
 const Home = () => {
   const [trendingData, setTrendingData] = useState();
   const [mostTrending, setMostTrending] = useState();
-  const [trendingImages, setTrendingImages] = useState();
+  const [otherThreePopular, setOtherThreePopular] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
 
@@ -19,15 +31,24 @@ const Home = () => {
       setTrendingData(trending);
       setMostTrending(getMostTrending(trending.results));
     });
-  }, [mediaType, timeframe, trendingImages]);
+    getPopularPeople().then((popular) => {
+      setOtherThreePopular([
+        popular.results[1],
+        popular.results[2],
+        popular.results[3],
+      ]);
+    });
+  }, [mediaType, timeframe]);
+
+  console.log(otherThreePopular);
 
   return (
     <Layout>
-      <Grid templateColumns="78% 20%" gap={8}>
+      <Grid templateColumns="81% 17%" gap={8}>
         <GridItem className={styles.wrapper}>
           <Grid templateColumns="repeat(3, 1fr)" gap={8}>
             <GridItem colSpan={1}>
-              <Heading>Trending</Heading>
+              <Heading>Trending Media</Heading>
               <Flex mt={4} mb={6}>
                 <Select
                   placeholder="Any Media"
@@ -41,9 +62,7 @@ const Home = () => {
                 >
                   <option value="movie">Movies</option>
                   <option value="tv">Shows</option>
-                  <option value="person" disabled>
-                    Casts
-                  </option>
+                  <option value="person">Casts</option>
                 </Select>
                 <Select
                   placeholder="Any Timeframe"
@@ -66,8 +85,21 @@ const Home = () => {
             </GridItem>
           </Grid>
         </GridItem>
-        <GridItem className={styles.wrapper}>
-          <div>featured</div>
+        <GridItem>
+          {otherThreePopular
+            ? otherThreePopular.map((actor, i) => (
+                <div key={i} className={styles.actorCard}>
+                  <Box>
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                      alt={`${actor.name}'s photo`}
+                      className={styles.actorImg}
+                    ></Image>
+                    {actor.name}
+                  </Box>
+                </div>
+              ))
+            : null}
         </GridItem>
       </Grid>
     </Layout>

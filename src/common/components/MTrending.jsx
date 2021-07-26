@@ -8,6 +8,15 @@ import {
   Wrap,
   WrapItem,
   Avatar,
+  Stat,
+  StatLabel,
+  StatNumber,
+  Badge,
+  StatHelpText,
+  SimpleGrid,
+  Stack,
+  Divider,
+  Box,
 } from "@chakra-ui/react";
 import checkMediaType from "../lib/checkMediaType";
 
@@ -15,12 +24,15 @@ const MTrending = ({ mostTrending }) => {
   if (!mostTrending) {
     return null;
   } else {
-    console.log(mostTrending);
     return (
       <div>
         <div style={{ position: "relative" }}>
           <Image
-            src={`https://image.tmdb.org/t/p/original${mostTrending.backdrop_path}`}
+            src={checkMediaType(
+              "imgSrcBackdrop",
+              mostTrending.media_type,
+              mostTrending
+            )}
             fallbackSrc={"/noMoviePoster.jpg"}
             alt=""
             borderRadius="25px"
@@ -36,34 +48,69 @@ const MTrending = ({ mostTrending }) => {
             {checkMediaType("title", mostTrending.media_type, mostTrending)}
           </Heading>
         </div>
-        <Flex mt={8}>
-          <Heading size="md" pt={2} mr={8}>
-            Cast
-          </Heading>
-          <Wrap>
-            <WrapItem>
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-            </WrapItem>
-            <WrapItem>
-              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-            </WrapItem>
-            <WrapItem>
-              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-            </WrapItem>
-            <WrapItem>
-              <Avatar
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/prosper-baba"
-              />
-            </WrapItem>
-            <WrapItem>
-              <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
-            </WrapItem>
-            <WrapItem>
-              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-            </WrapItem>
-          </Wrap>
-        </Flex>
+        <SimpleGrid columns={2} spacing={10} mt={4}>
+          <Box>
+            <p
+              style={{
+                textAlign: "justify",
+                display: "-webkit-box",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {mostTrending.overview}
+            </p>
+          </Box>
+          <Box>
+            <Flex>
+              <Box>
+                <Badge verticalAlign="baseline">Action</Badge>
+                &nbsp; &nbsp;
+                <Badge verticalAlign="baseline">Thriller</Badge>
+              </Box>
+              <Text>&nbsp;&nbsp;-&nbsp;&nbsp;2 Hours & 35 Minutes</Text>
+            </Flex>
+            <Flex mt={4}>
+              <Wrap spacing="1vw">
+                <WrapItem>
+                  <Avatar
+                    name="Dan Abrahmov"
+                    src="https://bit.ly/dan-abramov"
+                  />
+                </WrapItem>
+                <WrapItem>
+                  <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+                </WrapItem>
+                <WrapItem>
+                  <Avatar
+                    name="Ryan Florence"
+                    src="https://bit.ly/ryan-florence"
+                  />
+                </WrapItem>
+                <WrapItem>
+                  <Avatar
+                    name="Prosper Otemuyiwa"
+                    src="https://bit.ly/prosper-baba"
+                  />
+                </WrapItem>
+                <WrapItem>
+                  <Avatar
+                    name="Christian Nwamba"
+                    src="https://bit.ly/code-beast"
+                  />
+                </WrapItem>
+                <WrapItem>
+                  <Avatar
+                    name="Segun Adebayo"
+                    src="https://bit.ly/sage-adebayo"
+                  />
+                </WrapItem>
+              </Wrap>
+            </Flex>
+          </Box>
+        </SimpleGrid>
       </div>
     );
   }
