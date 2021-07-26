@@ -1,5 +1,7 @@
 {
   "name": "lightflix",
+  "author": "Jean-Simon Royer",
+  "git": "https://github.com/jsip/lightflix",
   "version": "0.1.0",
   "private": true,
   "scripts": {
