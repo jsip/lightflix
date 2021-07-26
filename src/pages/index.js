@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
+import convertGenres from "../common/lib/convertGenres";
 import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
 import getBiggestVal from "../common/utils/getBiggestVal";
@@ -23,13 +24,19 @@ const Home = () => {
   const [trendingData, setTrendingData] = useState();
   const [mostTrending, setMostTrending] = useState();
   const [otherThreePopular, setOtherThreePopular] = useState();
+  const [mainGenres, setMainGenres] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
       setTrendingData(trending);
-      setMostTrending(getBiggestVal(trending.results));
+      getBiggestVal(trending.results).then((res) => {
+        setMostTrending(res);
+        convertGenres(res.media_type, res.genre_ids).then((genres) =>
+          setMainGenres(genres)
+        );
+      });
     });
     getPopularPeople().then((popular) => {
       setOtherThreePopular([
@@ -40,15 +47,13 @@ const Home = () => {
     });
   }, [mediaType, timeframe]);
 
-  console.log(otherThreePopular);
-
   return (
     <Layout>
       <Grid templateColumns="81% 17%" gap={8}>
         <GridItem className={styles.wrapper}>
           <Grid templateColumns="repeat(3, 1fr)" gap={8}>
             <GridItem colSpan={1}>
-              <Heading>Trending Media</Heading>
+              <Heading>Trending</Heading>
               <Flex mt={4} mb={6}>
                 <Select
                   placeholder="Any Media"
@@ -80,7 +85,7 @@ const Home = () => {
               <TCard trendingData={trendingData} />
             </GridItem>
             <GridItem colSpan={2}>
-              <MTrending mostTrending={mostTrending} />
+              <MTrending mostTrending={mostTrending} mainGenres={mainGenres} />
               <Flex></Flex>
             </GridItem>
           </Grid>

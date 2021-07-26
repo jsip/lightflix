@@ -20,8 +20,8 @@ import {
 } from "@chakra-ui/react";
 import checkMediaType from "../lib/checkMediaType";
 
-const MTrending = ({ mostTrending }) => {
-  if (!mostTrending) {
+const MTrending = ({ mostTrending, mainGenres }) => {
+  if (!mostTrending || !mainGenres) {
     return null;
   } else {
     return (
@@ -48,32 +48,25 @@ const MTrending = ({ mostTrending }) => {
             {checkMediaType("title", mostTrending.media_type, mostTrending)}
           </Heading>
         </div>
-        <SimpleGrid columns={2} spacing={10} mt={4}>
-          <Box>
-            <p
-              style={{
-                textAlign: "justify",
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {mostTrending.overview}
-            </p>
-          </Box>
+        <SimpleGrid columns={2} mt={8}>
           <Box>
             <Flex>
               <Box>
-                <Badge verticalAlign="baseline">Action</Badge>
-                &nbsp; &nbsp;
-                <Badge verticalAlign="baseline">Thriller</Badge>
+                {mainGenres
+                  ? mainGenres.map((genre) => (
+                      <Badge verticalAlign="baseline" key={genre.id} mr={2}>
+                        {genre.name}
+                      </Badge>
+                    ))
+                  : null}
               </Box>
-              <Text>&nbsp;&nbsp;-&nbsp;&nbsp;2 Hours & 35 Minutes</Text>
+              <Text fontWeight="600">
+                <span style={{ fontWeight: "800" }}>-</span>
+                &nbsp;&nbsp;2hrs & 35min
+              </Text>
             </Flex>
             <Flex mt={4}>
-              <Wrap spacing="1vw">
+              <Wrap spacing="1.25vw">
                 <WrapItem>
                   <Avatar
                     name="Dan Abrahmov"
@@ -109,6 +102,20 @@ const MTrending = ({ mostTrending }) => {
                 </WrapItem>
               </Wrap>
             </Flex>
+          </Box>
+          <Box>
+            <p
+              style={{
+                textAlign: "left",
+                display: "-webkit-box",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {mostTrending.overview}
+            </p>
           </Box>
         </SimpleGrid>
       </div>
