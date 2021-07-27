@@ -1,27 +1,37 @@
-import React from "react";
 import {
+  Avatar,
+  Badge,
+  Box,
+  Flex,
   Heading,
   Image,
-  Text,
-  Flex,
-  Spacer,
-  Wrap,
-  WrapItem,
-  Avatar,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Badge,
-  StatHelpText,
   SimpleGrid,
-  Stack,
-  Divider,
-  Box,
+  Text,
+  Wrap,
+  Spacer,
+  Tab,
+  TabList,
+  TabPanels,
+  Tabs,
+  TabPanel,
+  WrapItem,
 } from "@chakra-ui/react";
+import React from "react";
 import checkMediaType from "../lib/checkMediaType";
+import EmbeddedYT from "./EmbeddedYT";
 
-const MTrending = ({ mostTrending, mainGenres }) => {
-  if (!mostTrending || !mainGenres) {
+const MTrending = ({
+  mostTrending,
+  mainGenres,
+  mostTrendingVideos,
+  mostTrendingImages,
+}) => {
+  if (
+    !mostTrending ||
+    !mainGenres ||
+    !mostTrendingVideos ||
+    !mostTrendingImages
+  ) {
     return null;
   } else {
     return (
@@ -112,12 +122,33 @@ const MTrending = ({ mostTrending, mainGenres }) => {
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                lineHeight: "1.75",
               }}
             >
               {mostTrending.overview}
             </p>
           </Box>
         </SimpleGrid>
+        <Tabs variant="enclosed" mt={8}>
+          <TabList>
+            <Tab>Videos ({mostTrendingVideos.length > 3 ? "3" : mostTrendingVideos.length})</Tab>
+            <Tab>Images</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Flex mt={8} justify="center">
+                <Wrap spacing="2vw">
+                  {mostTrendingVideos.slice(0, 3).map((embbededId) => (
+                    <WrapItem key={embbededId}>
+                      <EmbeddedYT embeddedKey={embbededId} />
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              </Flex>
+            </TabPanel>
+            <TabPanel></TabPanel>
+          </TabPanels>
+        </Tabs>
       </div>
     );
   }

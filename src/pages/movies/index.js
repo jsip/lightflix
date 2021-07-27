@@ -17,7 +17,6 @@ export const getStaticProps = async () => {
 };
 
 const Movies = ({ movies }) => {
-  console.log(movies);
   const _movies = movies.results.map((movie) => {
     let id = movie.id.toString();
     return (

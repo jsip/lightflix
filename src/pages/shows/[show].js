@@ -1,11 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../../common/components/Layout";
-import getShowInfo from "../../common/lib/getShowInfo";
+import getInfo from "../../common/lib/getInfo";
 
 export const getServerSideProps = async ({ params }) => {
-  const showInfo = await getShowInfo(params.show);
-  console.log(showInfo, params);
+  const showInfo = await getInfo(params.show, "tv");
   return {
     props: {
       showInfo,

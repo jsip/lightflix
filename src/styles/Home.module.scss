@@ -11,9 +11,15 @@
   background-color: white;
   border-radius: 40px;
   height: auto;
-  padding-bottom: 3em;
+  padding-bottom: 2vh;
+  text-align: center;
 }
 
 .actorImg {
+  padding-bottom: 2vh;
   border-radius: 40px 40px 0 0;
+}
+
+.responsiveEmbed iframe {
+  border-radius: 15px;
 }

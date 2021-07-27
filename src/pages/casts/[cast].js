@@ -1,11 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../../common/components/Layout";
-import getCastInfo from "../../common/lib/getCastInfo";
+import getInfo from "../../common/lib/getInfo";
 
 export const getServerSideProps = async ({ params }) => {
-  const castInfo = await getCastInfo(params.cast);
-  console.log(castInfo);
+  const castInfo = await getInfo(params.cast, "person");
   return {
     props: {
       castInfo,

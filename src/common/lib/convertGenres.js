@@ -3,6 +3,7 @@ import API_KEY from "../utils/constants";
 
 const convertGenres = async (mediaType, genreIds) => {
   let genres = [];
+  if (mediaType === "person") return [];
   const genreLists =
     mediaType === "movies"
       ? await fetchData(

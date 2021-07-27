@@ -1,20 +1,11 @@
-import {
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Select,
-  VStack,
-  Box,
-  Stack,
-  Image,
-  StackDivider,
-} from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Heading, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import ATrending from "../common/components/ATrending";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
 import convertGenres from "../common/lib/convertGenres";
+import media from "../common/lib/getMedia";
 import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
 import getBiggestVal from "../common/utils/getBiggestVal";
@@ -25,6 +16,8 @@ const Home = () => {
   const [mostTrending, setMostTrending] = useState();
   const [otherThreePopular, setOtherThreePopular] = useState();
   const [mainGenres, setMainGenres] = useState();
+  const [mostTrendingVideos, setMostTrendingVideos] = useState();
+  const [mostTrendingImages, setMostTrendingImages] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
 
@@ -33,17 +26,19 @@ const Home = () => {
       setTrendingData(trending);
       getBiggestVal(trending.results).then((res) => {
         setMostTrending(res);
+        media.getVideos(res.id, res.media_type).then((videos) => {
+          setMostTrendingVideos(videos);
+        });
+        media.getImages(res.id, res.media_type).then((images) => {
+          setMostTrendingImages(images);
+        });
         convertGenres(res.media_type, res.genre_ids).then((genres) =>
           setMainGenres(genres)
         );
       });
     });
     getPopularPeople().then((popular) => {
-      setOtherThreePopular([
-        popular.results[1],
-        popular.results[2],
-        popular.results[3],
-      ]);
+      setOtherThreePopular(popular.results.slice(1, 4));
     });
   }, [mediaType, timeframe]);
 
@@ -53,7 +48,7 @@ const Home = () => {
         <GridItem className={styles.wrapper}>
           <Grid templateColumns="repeat(3, 1fr)" gap={8}>
             <GridItem colSpan={1}>
-              <Heading>Trending</Heading>
+              <Heading fontSize="3xl">Trending</Heading>
               <Flex mt={4} mb={6}>
                 <Select
                   placeholder="Any Media"
@@ -85,26 +80,20 @@ const Home = () => {
               <TCard trendingData={trendingData} />
             </GridItem>
             <GridItem colSpan={2}>
-              <MTrending mostTrending={mostTrending} mainGenres={mainGenres} />
+              <MTrending
+                mostTrending={mostTrending}
+                mainGenres={mainGenres}
+                mostTrendingVideos={mostTrendingVideos}
+                mostTrendingImages={mostTrendingImages}
+              />
               <Flex></Flex>
             </GridItem>
           </Grid>
         </GridItem>
         <GridItem>
-          {otherThreePopular
-            ? otherThreePopular.map((actor, i) => (
-                <div key={i} className={styles.actorCard}>
-                  <Box>
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
-                      alt={`${actor.name}'s photo`}
-                      className={styles.actorImg}
-                    ></Image>
-                    {actor.name}
-                  </Box>
-                </div>
-              ))
-            : null}
+          {otherThreePopular ? (
+            <ATrending otherThreePopular={otherThreePopular} />
+          ) : null}
         </GridItem>
       </Grid>
     </Layout>
