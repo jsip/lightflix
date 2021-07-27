@@ -47,6 +47,16 @@ const checkMediaType = (useCase, queryType, data) => {
           ? undefined
           : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
       }
+
+    case "runtime":
+      return queryType === "movie" ? data.runtime : data.episode_run_time;
+
+    case "releaseDate":
+      if (data.release_date) {
+        return data.release_date.split("-")[0];
+      } else if (data.first_air_date) {
+        return data.first_air_date.split("-")[0];
+      }
   }
 };
 

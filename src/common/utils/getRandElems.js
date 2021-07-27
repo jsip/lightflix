@@ -1,5 +1,3 @@
-import React from "react";
-
 const getRandElems = (arr, maxSlice) =>
   arr.sort(() => Math.random() - Math.random()).slice(0, maxSlice);
 

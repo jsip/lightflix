@@ -5,6 +5,8 @@ import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
 import convertGenres from "../common/lib/convertGenres";
+import getInfo from "../common/lib/getInfo";
+import getCast from "../common/lib/getCast";
 import media from "../common/lib/getMedia";
 import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
@@ -14,34 +16,50 @@ import styles from "../styles/Home.module.scss";
 const Home = () => {
   const [trendingData, setTrendingData] = useState();
   const [mostTrending, setMostTrending] = useState();
+  const [mostTrendingInfo, setMostTrendingInfo] = useState();
   const [otherPopular, setOtherPopular] = useState();
   const [mainGenres, setMainGenres] = useState();
   const [mostTrendingVideos, setMostTrendingVideos] = useState();
   const [mostTrendingImages, setMostTrendingImages] = useState();
+  const [castData, setCastData] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
   const actorsToDisplay = 2;
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
-      setTrendingData(trending);
+      setTrendingData(trending.results);
       getBiggestVal(trending.results).then((res) => {
         setMostTrending(res);
-        media.getVideos(res.id, res.media_type).then((videos) => {
-          setMostTrendingVideos(videos);
-        });
-        media.getImages(res.id, res.media_type).then((images) => {
-          setMostTrendingImages(images);
-        });
-        convertGenres(res.media_type, res.genre_ids).then((genres) =>
-          setMainGenres(genres)
-        );
       });
     });
     getPopularPeople().then((popular) => {
       setOtherPopular(popular.results.slice(1, actorsToDisplay + 1));
     });
   }, [mediaType, timeframe]);
+
+  useEffect(() => {
+    if (mostTrending) {
+      const res = mostTrending;
+      console.log(res);
+      getCast(res.id, res.media_type).then((cast) => {
+        setCastData(cast.cast.splice(0, 6));
+      });
+      getInfo(res.id, res.media_type).then((info) => {
+        setMostTrendingInfo(info);
+      });
+      media.getVideos(res.id, res.media_type).then((videos) => {
+        setMostTrendingVideos(videos);
+      });
+      media.getImages(res.id, res.media_type).then((images) => {
+        setMostTrendingImages(images);
+      });
+      convertGenres(res.media_type, res.genre_ids).then((genres) => {
+        console.log(genres);
+        setMainGenres(genres);
+      });
+    }
+  }, [mostTrending]);
 
   return (
     <Layout>
@@ -63,7 +81,9 @@ const Home = () => {
                 >
                   <option value="movie">Movies</option>
                   <option value="tv">Shows</option>
-                  <option value="person">Casts</option>
+                  <option value="person" disabled>
+                    Casts
+                  </option>
                 </Select>
                 <Select
                   placeholder="Any Timeframe"
@@ -78,14 +98,21 @@ const Home = () => {
                   <option value="week">This Week</option>
                 </Select>
               </Flex>
-              <TCard trendingData={trendingData} />
+              <TCard
+                trendingData={trendingData}
+                cardHover={(data) => {
+                  setMostTrending(data);
+                }}
+              />
             </GridItem>
             <GridItem colSpan={2}>
               <MTrending
                 mostTrending={mostTrending}
+                mostTrendingInfo={mostTrendingInfo}
                 mainGenres={mainGenres}
                 mostTrendingVideos={mostTrendingVideos}
                 mostTrendingImages={mostTrendingImages}
+                castData={castData}
               />
               <Flex></Flex>
             </GridItem>

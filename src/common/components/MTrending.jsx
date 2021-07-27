@@ -21,23 +21,29 @@ import checkMediaType from "../lib/checkMediaType";
 import EmbeddedYT from "./EmbeddedYT";
 import styles from "../../styles/Home.module.scss";
 import randElems from "../utils/getRandElems";
+import formatRuntime from "../utils/formatRuntime";
+import Cast from "./Cast";
 
 const MTrending = ({
   mostTrending,
+  mostTrendingInfo,
   mainGenres,
   mostTrendingVideos,
   mostTrendingImages,
+  castData,
 }) => {
+  console.log(mostTrendingImages);
   const mediaMax = 3;
   if (
     !mostTrending ||
     !mainGenres ||
     !mostTrendingVideos ||
-    !mostTrendingImages
+    !mostTrendingImages ||
+    !mostTrendingInfo ||
+    !castData
   ) {
     return null;
   } else {
-    console.log(mostTrendingImages);
     return (
       <div>
         <div style={{ position: "relative" }}>
@@ -64,7 +70,7 @@ const MTrending = ({
         </div>
         <SimpleGrid columns={2} mt={8}>
           <Box>
-            <Flex>
+            <Flex mt={8}>
               <Box>
                 {mainGenres
                   ? mainGenres.map((genre) => (
@@ -76,48 +82,42 @@ const MTrending = ({
               </Box>
               <Text fontWeight="600">
                 <span style={{ fontWeight: "800" }}>-</span>
-                &nbsp;&nbsp;2hrs & 35min
+                &nbsp;&nbsp;
+                {formatRuntime(
+                  checkMediaType(
+                    "runtime",
+                    mostTrending.media_type,
+                    mostTrendingInfo
+                  )
+                )}
+                &nbsp;&nbsp;
+                <span className={styles.releaseDateBefore}>
+                  &#xB7; &nbsp;
+                  {checkMediaType(
+                    "releaseDate",
+                    mostTrending.media_type,
+                    mostTrendingInfo
+                  )}
+                </span>
               </Text>
             </Flex>
-            <Flex mt={4}>
+            <Flex mt={8}>
               <Wrap spacing="1.25vw">
-                <WrapItem>
-                  <Avatar
-                    name="Dan Abrahmov"
-                    src="https://bit.ly/dan-abramov"
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-                </WrapItem>
-                <WrapItem>
-                  <Avatar
-                    name="Ryan Florence"
-                    src="https://bit.ly/ryan-florence"
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Avatar
-                    name="Prosper Otemuyiwa"
-                    src="https://bit.ly/prosper-baba"
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Avatar
-                    name="Christian Nwamba"
-                    src="https://bit.ly/code-beast"
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Avatar
-                    name="Segun Adebayo"
-                    src="https://bit.ly/sage-adebayo"
-                  />
-                </WrapItem>
+                <Cast castData={castData} />
               </Wrap>
             </Flex>
           </Box>
           <Box>
+            <q
+              style={{
+                fontSize: "2vw",
+                fontStyle: "italic",
+                verticalAlign: "baseline",
+                opacity: "0.75",
+              }}
+            >
+              {mostTrendingInfo.tagline}
+            </q>
             <p
               style={{
                 textAlign: "left",
@@ -144,9 +144,9 @@ const MTrending = ({
             </Tab>
             <Tab>
               Images (
-              {mostTrendingVideos.length > mediaMax
+              {mostTrendingImages.posters.length > mediaMax
                 ? mediaMax
-                : mostTrendingVideos.length}
+                : mostTrendingImages.length}
               )
             </Tab>
           </TabList>

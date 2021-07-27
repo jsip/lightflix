@@ -7,7 +7,7 @@ const EmbeddedYT = ({ embeddedKey }) => {
       <iframe
         width="267"
         height="150"
-        src={`https://www.youtube.com/embed/${embeddedKey}?modestbranding=0`}
+        src={`https://www.youtube.com/embed/${embeddedKey}`}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

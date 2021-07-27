@@ -5,19 +5,20 @@ const convertGenres = async (mediaType, genreIds) => {
   let genres = [];
   if (mediaType === "person") return [];
   const genreLists =
-    mediaType === "movies"
+    mediaType === "movie"
       ? await fetchData(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
         )
       : await fetchData(
-          `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`
+          `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
         );
+  console.log(genreLists);
   for (let g of genreIds) {
     genreLists.genres.find((genre) =>
       genre.id === g ? (genres = [...genres, genre]) : null
     );
   }
-  return genres;
+  return genres.splice(0, 3);
 };
 
 export default convertGenres;
