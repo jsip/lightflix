@@ -12,8 +12,8 @@ import {
 import React from "react";
 import styles from "../../styles/Home.module.scss";
 
-const ATrending = ({ otherThreePopular }) => {
-  return otherThreePopular.map((actor, i) => (
+const ATrending = ({ otherPopular }) => {
+  return otherPopular.map((actor, i) => (
     <div key={i} className={styles.actorCard}>
       <Box>
         <Image

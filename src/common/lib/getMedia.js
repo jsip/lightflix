@@ -15,15 +15,10 @@ const getVideos = async (Id, mediaType) => {
 };
 
 const getImages = async (Id, mediaType) => {
-  let urls = [];
   const imageData = await fetchData(
     `https://api.themoviedb.org/3/${mediaType}/${Id}/images?api_key=${API_KEY}`
   );
-  console.log(imageData);
-  // for (let v of imageData.results) {
-  //   urls = [...urls, v.key];
-  // }
-  return urls;
+  return imageData;
 };
 
 const media = { getVideos, getImages };

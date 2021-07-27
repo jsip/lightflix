@@ -19,6 +19,8 @@ import {
 import React from "react";
 import checkMediaType from "../lib/checkMediaType";
 import EmbeddedYT from "./EmbeddedYT";
+import styles from "../../styles/Home.module.scss";
+import randElems from "../utils/getRandElems";
 
 const MTrending = ({
   mostTrending,
@@ -26,6 +28,7 @@ const MTrending = ({
   mostTrendingVideos,
   mostTrendingImages,
 }) => {
+  const mediaMax = 3;
   if (
     !mostTrending ||
     !mainGenres ||
@@ -34,6 +37,7 @@ const MTrending = ({
   ) {
     return null;
   } else {
+    console.log(mostTrendingImages);
     return (
       <div>
         <div style={{ position: "relative" }}>
@@ -131,22 +135,58 @@ const MTrending = ({
         </SimpleGrid>
         <Tabs variant="enclosed" mt={8}>
           <TabList>
-            <Tab>Videos ({mostTrendingVideos.length > 3 ? "3" : mostTrendingVideos.length})</Tab>
-            <Tab>Images</Tab>
+            <Tab>
+              Videos (
+              {mostTrendingVideos.length > mediaMax
+                ? mediaMax
+                : mostTrendingVideos.length}
+              )
+            </Tab>
+            <Tab>
+              Images (
+              {mostTrendingVideos.length > mediaMax
+                ? mediaMax
+                : mostTrendingVideos.length}
+              )
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <Flex mt={8} justify="center">
                 <Wrap spacing="2vw">
-                  {mostTrendingVideos.slice(0, 3).map((embbededId) => (
-                    <WrapItem key={embbededId}>
-                      <EmbeddedYT embeddedKey={embbededId} />
-                    </WrapItem>
-                  ))}
+                  {randElems
+                    .getRandElems(mostTrendingVideos, mediaMax)
+                    .map((embbededId) => (
+                      <WrapItem key={embbededId}>
+                        <EmbeddedYT embeddedKey={embbededId} />
+                      </WrapItem>
+                    ))}
                 </Wrap>
               </Flex>
             </TabPanel>
-            <TabPanel></TabPanel>
+            <TabPanel>
+              <Flex mt={8} justify="center">
+                <Wrap spacing="2vw">
+                  {randElems
+                    .getRandElemsFilter(
+                      mostTrendingImages.posters,
+                      mediaMax,
+                      "iso_639_1",
+                      "en" || "fr"
+                    )
+                    .map((img) => (
+                      <WrapItem key={img.file_path.split("/")[1].split(".")[0]}>
+                        <Image
+                          src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
+                          fallbackSrc={"/noMoviePoster.jpg"}
+                          alt={img.file_path}
+                          className={styles.responsiveImg}
+                        />
+                      </WrapItem>
+                    ))}
+                </Wrap>
+              </Flex>
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </div>

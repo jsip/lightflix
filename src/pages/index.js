@@ -14,12 +14,13 @@ import styles from "../styles/Home.module.scss";
 const Home = () => {
   const [trendingData, setTrendingData] = useState();
   const [mostTrending, setMostTrending] = useState();
-  const [otherThreePopular, setOtherThreePopular] = useState();
+  const [otherPopular, setOtherPopular] = useState();
   const [mainGenres, setMainGenres] = useState();
   const [mostTrendingVideos, setMostTrendingVideos] = useState();
   const [mostTrendingImages, setMostTrendingImages] = useState();
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
+  const actorsToDisplay = 2;
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
@@ -38,7 +39,7 @@ const Home = () => {
       });
     });
     getPopularPeople().then((popular) => {
-      setOtherThreePopular(popular.results.slice(1, 4));
+      setOtherPopular(popular.results.slice(1, actorsToDisplay + 1));
     });
   }, [mediaType, timeframe]);
 
@@ -91,9 +92,7 @@ const Home = () => {
           </Grid>
         </GridItem>
         <GridItem>
-          {otherThreePopular ? (
-            <ATrending otherThreePopular={otherThreePopular} />
-          ) : null}
+          {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
         </GridItem>
       </Grid>
     </Layout>
