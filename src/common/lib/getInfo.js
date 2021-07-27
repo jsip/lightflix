@@ -3,11 +3,9 @@ import fetchData from "./fetchData";
 
 // movie, tv, person
 
-const getInfo = async (Id, mediaType) => {
-  const infoData = await fetchData(
+const getInfo = async (Id, mediaType) =>
+  await fetchData(
     `https://api.themoviedb.org/3/${mediaType}/${Id}?api_key=${API_KEY}&language=en-US`
   );
-  return infoData;
-};
 
 export default getInfo;
