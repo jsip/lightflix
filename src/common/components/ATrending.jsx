@@ -1,7 +1,13 @@
 import {
   Box,
-  Image, Stat, StatArrow, StatGroup, StatHelpText, StatLabel,
-  StatNumber, Text
+  Image,
+  Stat,
+  StatArrow,
+  StatGroup,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import styles from "../../styles/Home.module.scss";
