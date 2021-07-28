@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, Heading, Select } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Heading, Select, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ATrending from "../common/components/ATrending";
 import Layout from "../common/components/Layout";
@@ -25,7 +25,7 @@ const Home = () => {
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
   const actorsToDisplay = 2;
-  const castToDisplay = 6;
+  const castToDisplay = 5;
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
@@ -65,9 +65,9 @@ const Home = () => {
 
   return (
     <Layout>
-      <Grid templateColumns="81% 17%" gap={8}>
-        <GridItem className={styles.wrapper}>
-          <Grid templateColumns="repeat(3, 1fr)" gap={8}>
+      <SimpleGrid columns={6} gap={8}>
+        <GridItem className={styles.wrapper} colSpan={5}>
+          <SimpleGrid columns={3}>
             <GridItem colSpan={1}>
               <Heading fontSize="3xl">Trending</Heading>
               <Flex mt={4} mb={6}>
@@ -116,14 +116,13 @@ const Home = () => {
                 mostTrendingImages={mostTrendingImages}
                 castData={castData}
               />
-              <Flex></Flex>
             </GridItem>
-          </Grid>
+          </SimpleGrid>
         </GridItem>
         <GridItem>
           {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
         </GridItem>
-      </Grid>
+      </SimpleGrid>
     </Layout>
   );
 };

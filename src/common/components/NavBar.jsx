@@ -1,4 +1,22 @@
-import { Box, Flex, Image, Link, Spacer } from "@chakra-ui/react";
+import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Image,
+  Link,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Radio,
+  RadioGroup,
+  Spacer,
+  Stack,
+  Switch,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.scss";
@@ -8,7 +26,6 @@ import Search from "./Search";
 
 const NavBar = () => {
   const [query, setQuery] = useState("" || undefined);
-
   const queryHandler = (e) => {
     if (e.target.value.trim() !== "") {
       setQuery(e.target.value);
@@ -29,9 +46,6 @@ const NavBar = () => {
           </div>
         </Link>
       </NextLink>
-      <Spacer />
-      <Spacer />
-      <Spacer />
       <Spacer />
       <NextLink href="/movies" rel="noopener noreferrer">
         <Link className={styles.logoCont}>
@@ -65,18 +79,13 @@ const NavBar = () => {
         </Link>
       </NextLink>
       <Spacer />
-      <Spacer />
-      <Spacer />
-      <Spacer />
-      <Box>
+      <Box mr={4}>
         <Search
           onChangeHandler={queryHandler}
           query={query}
           placeholder={`Search ${GetRouterPath() || "LightFlix"}`}
         />
-        {!query
-          ? `\u00A0`
-          : `Searching for ${query}...`}
+        {!query ? `\u00A0` : `Searching for ${query}...`}
         {!query ? (
           ""
         ) : (
@@ -96,6 +105,37 @@ const NavBar = () => {
           </div>
         )}
       </Box>
+      <Menu closeOnSelect={false}>
+        <IconButton as={MenuButton} icon={<ChevronDownIcon />}></IconButton>
+        <MenuList>
+          <MenuGroup title="Language">
+            <MenuItem>
+              <RadioGroup defaultValue="2">
+                <Stack spacing={5} direction="row">
+                  <Radio colorScheme="teal" value="1">
+                    Français
+                  </Radio>
+                  <Radio colorScheme="teal" value="2">
+                    English
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </MenuItem>
+          </MenuGroup>
+          <MenuDivider />
+          <MenuGroup title="Theme">
+            <MenuItem>
+              <Box>
+                <MoonIcon />
+                &nbsp;&nbsp;
+                <Switch colorScheme="teal" size="lg" />
+                &nbsp;&nbsp;
+                <SunIcon />
+              </Box>
+            </MenuItem>
+          </MenuGroup>
+        </MenuList>
+      </Menu>
     </Flex>
   );
   return nav;

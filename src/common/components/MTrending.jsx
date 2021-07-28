@@ -92,7 +92,8 @@ const MTrending = ({
               )}
               &nbsp;&nbsp;
               <span className={styles.releaseDateBefore}>
-                &#xB7; &nbsp;
+                <span style={{}}>&#xB7;</span>
+                &nbsp;
                 {checkMediaType(
                   "releaseDate",
                   mostTrending.media_type,
@@ -116,15 +117,15 @@ const MTrending = ({
               </q>
             ) : null}
           </Box>
-          <SimpleGrid columns={2}>
-            <GridItem colSpan={1}>
+          <Flex>
+            <Box minWidth="max-content" mr={8}>
               <Flex mt={8}>
                 <Wrap spacing="1.25vw">
                   <Cast castData={castData} />
                 </Wrap>
               </Flex>
-            </GridItem>
-            <GridItem colSpan={1}>
+            </Box>
+            <Box>
               <Box>
                 <p
                   style={{
@@ -141,8 +142,8 @@ const MTrending = ({
                   {mostTrending.overview}
                 </p>
               </Box>
-            </GridItem>
-          </SimpleGrid>
+            </Box>
+          </Flex>
         </Box>
         <Tabs variant="enclosed" mt={8}>
           <TabList>
@@ -155,9 +156,19 @@ const MTrending = ({
             </Tab>
             <Tab>
               Images (
-              {mostTrendingImages.posters.length > mediaMax
+              {randElems.getRandElemsFilter(
+                mostTrendingImages.posters,
+                mediaMax,
+                "iso_639_1",
+                "en" || "fr"
+              )[1].length > mediaMax
                 ? mediaMax
-                : mostTrendingImages.length}
+                : randElems.getRandElemsFilter(
+                    mostTrendingImages.posters,
+                    mediaMax,
+                    "iso_639_1",
+                    "en" || "fr"
+                  )[1]}
               )
             </Tab>
           </TabList>
@@ -184,17 +195,22 @@ const MTrending = ({
                       mediaMax,
                       "iso_639_1",
                       "en" || "fr"
-                    )
-                    .map((img) => (
-                      <WrapItem key={img.file_path.split("/")[1].split(".")[0]}>
-                        <Image
-                          src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
-                          fallbackSrc={"/noMoviePoster.jpg"}
-                          alt={img.file_path}
-                          className={styles.responsiveImg}
-                        />
-                      </WrapItem>
-                    ))}
+                    )[0]
+                    .map((img) => {
+                      console.log(img);
+                      return (
+                        <WrapItem
+                          key={img.file_path.split("/")[1].split(".")[0]}
+                        >
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
+                            fallbackSrc={"/noMoviePoster.jpg"}
+                            alt={img.file_path}
+                            className={styles.responsiveImg}
+                          />
+                        </WrapItem>
+                      );
+                    })}
                 </Wrap>
               </Flex>
             </TabPanel>
