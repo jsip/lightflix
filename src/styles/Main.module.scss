@@ -1,17 +1,15 @@
 .containerBg {
-  background: linear-gradient(
-    90deg,
-    #00ff5e23 0%,
-    rgba(76, 3, 201, 0.096) 100%
-  );
+  background: url('/bg.png');
+  background-size: contain;
+  background-color:rgba(255, 255, 255, 0.50)
 }
 
 .container {
   width: 100%;
   height: auto;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(45px);
+  -webkit-backdrop-filter: blur(45px);
 }
 
 .wrapper {
