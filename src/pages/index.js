@@ -43,6 +43,7 @@ const Home = () => {
       const res = mostTrending;
       console.log(res);
       getCast(res.id, res.media_type).then((cast) => {
+        console.log(cast);
         setCastData(cast.cast.splice(0, 6));
       });
       getInfo(res.id, res.media_type).then((info) => {
