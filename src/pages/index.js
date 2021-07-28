@@ -25,6 +25,7 @@ const Home = () => {
   const [mediaType, setMediaType] = useState("all");
   const [timeframe, setTimeframe] = useState("week");
   const actorsToDisplay = 2;
+  const castToDisplay = 6;
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
@@ -44,7 +45,7 @@ const Home = () => {
       console.log(res);
       getCast(res.id, res.media_type).then((cast) => {
         console.log(cast);
-        setCastData(cast.cast.splice(0, 6));
+        setCastData(cast.cast.splice(0, castToDisplay));
       });
       getInfo(res.id, res.media_type).then((info) => {
         setMostTrendingInfo(info);
