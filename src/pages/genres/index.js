@@ -22,7 +22,7 @@ const Genres = ({ genres }) => {
       <NextLink
         key={genre.id}
         href="/genres/[genre]"
-        as={`/genres/${genre.name}`}
+        as={`/genres/${genre.id}`}
       >
         <Link>
           <Heading>{genre.name}</Heading>

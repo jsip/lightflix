@@ -1,29 +1,27 @@
 import {
-  Avatar,
   Badge,
   Box,
   Flex,
   Heading,
   Image,
-  SimpleGrid,
-  GridItem,
-  Text,
-  Wrap,
-  Spacer,
   Tab,
+  Link,
   TabList,
+  TabPanel,
   TabPanels,
   Tabs,
-  TabPanel,
+  Text,
+  Wrap,
   WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
-import checkMediaType from "../lib/checkMediaType";
-import EmbeddedYT from "./EmbeddedYT";
+import NextLink from "next/link";
 import styles from "../../styles/Home.module.scss";
-import randElems from "../utils/getRandElems";
+import checkMediaType from "../lib/checkMediaType";
 import formatRuntime from "../utils/formatRuntime";
+import randElems from "../utils/getRandElems";
 import Cast from "./Cast";
+import EmbeddedYT from "./EmbeddedYT";
 
 const MTrending = ({
   mostTrending,
@@ -48,35 +46,50 @@ const MTrending = ({
     return (
       <div>
         <div style={{ position: "relative" }}>
-          <Image
-            src={checkMediaType(
-              "imgSrcBackdrop",
-              mostTrending.media_type,
-              mostTrending
-            )}
-            fallbackSrc={"/noMoviePoster.jpg"}
-            alt=""
-            borderRadius="25px"
-          ></Image>
-          <Heading
-            size="lg"
-            position="absolute"
-            bottom="12px"
-            left="16px"
-            color="white"
-            textShadow="0px 0px 5px #424242"
+          <NextLink
+            href={checkMediaType("href", mostTrending.media_type, mostTrending)}
+            as={checkMediaType("as", mostTrending.media_type, mostTrending)}
           >
-            {checkMediaType("title", mostTrending.media_type, mostTrending)}
-          </Heading>
+            <Link>
+              <Image
+                src={checkMediaType(
+                  "imgSrcBackdrop",
+                  mostTrending.media_type,
+                  mostTrending
+                )}
+                fallbackSrc={"/noMoviePoster.jpg"}
+                alt=""
+                borderRadius="25px"
+              ></Image>
+              <Heading
+                size="lg"
+                position="absolute"
+                bottom="12px"
+                left="16px"
+                color="white"
+                textShadow="0px 0px 5px #424242"
+              >
+                {checkMediaType("title", mostTrending.media_type, mostTrending)}
+              </Heading>
+            </Link>
+          </NextLink>
         </div>
-        <Box columns={1} mt={8}>
+        <Box columns={1} mt={12}>
           <Flex mt={8}>
             <Box>
               {mainGenres
                 ? mainGenres.map((genre) => (
-                    <Badge verticalAlign="baseline" key={genre.id} mr={2}>
-                      {genre.name}
-                    </Badge>
+                    <NextLink
+                      key={genre.id}
+                      href={checkMediaType("href", "genre", genre)}
+                      as={checkMediaType("as", "genre", genre)}
+                    >
+                      <Link>
+                        <Badge verticalAlign="baseline" key={genre.id} mr={2}>
+                          {genre.name}
+                        </Badge>
+                      </Link>
+                    </NextLink>
                   ))
                 : null}
             </Box>
@@ -119,7 +132,7 @@ const MTrending = ({
           </Box>
           <Flex>
             <Box minWidth="max-content" mr={8}>
-              <Flex mt={8}>
+              <Flex mt={12}>
                 <Wrap spacing="1.25vw">
                   <Cast castData={castData} />
                 </Wrap>
@@ -145,7 +158,7 @@ const MTrending = ({
             </Box>
           </Flex>
         </Box>
-        <Tabs variant="enclosed" mt={8}>
+        <Tabs variant="enclosed" mt={24}>
           <TabList>
             <Tab>
               Videos (
@@ -197,7 +210,6 @@ const MTrending = ({
                       "en" || "fr"
                     )[0]
                     .map((img) => {
-                      console.log(img);
                       return (
                         <WrapItem
                           key={img.file_path.split("/")[1].split(".")[0]}

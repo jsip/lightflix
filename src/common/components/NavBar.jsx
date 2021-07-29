@@ -47,6 +47,7 @@ const NavBar = () => {
         </Link>
       </NextLink>
       <Spacer />
+      <Spacer />
       <NextLink href="/movies" rel="noopener noreferrer">
         <Link className={styles.logoCont}>
           <div className={styles.logoText}>

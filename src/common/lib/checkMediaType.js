@@ -5,8 +5,10 @@ const checkMediaType = (useCase, queryType, data) => {
         return "/movies/[movie]";
       } else if (queryType === "tv") {
         return "/shows/[show]";
-      } else {
+      } else if (queryType === "person") {
         return "/casts/[cast]";
+      } else if (queryType === "genre") {
+        return "/genres/[genre]";
       }
 
     case "as":
@@ -14,8 +16,10 @@ const checkMediaType = (useCase, queryType, data) => {
         return `/movies/${data.id}`;
       } else if (queryType === "tv") {
         return `/shows/${data.id}`;
-      } else {
+      } else if (queryType === "person") {
         return `/casts/${data.id}`;
+      } else if (queryType === "genre") {
+        return `/genres/${data.id}`;
       }
 
     case "title":

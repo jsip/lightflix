@@ -1,24 +1,24 @@
-import fetchData from "./fetchData";
-import API_KEY from "../utils/constants";
+import getGenre from "./getGenre";
 
 const convertGenres = async (mediaType, genreIds) => {
-  let genres = [];
+  let convertedGenres = [];
   if (mediaType === "person") return [];
-  const genreLists =
-    mediaType === "movie"
-      ? await fetchData(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
-        )
-      : await fetchData(
-          `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
+  return getGenre.genres().then((genres) => {
+    if (typeof genreIds === "string") {
+      return (convertedGenres = genres.filter((genre) => {
+        return genre.id === parseInt(genreIds) ? genre : null;
+      }));
+    } else {
+      for (let g of genreIds) {
+        genres.find((genre) =>
+          genre.id === g
+            ? (convertedGenres = [...convertedGenres, genre])
+            : null
         );
-  console.log(genreLists);
-  for (let g of genreIds) {
-    genreLists.genres.find((genre) =>
-      genre.id === g ? (genres = [...genres, genre]) : null
-    );
-  }
-  return genres.splice(0, 3);
+      }
+      return convertedGenres.splice(0, 3);
+    }
+  });
 };
 
 export default convertGenres;
