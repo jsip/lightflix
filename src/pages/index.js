@@ -1,11 +1,7 @@
-import {
-  Flex, GridItem,
-  Heading,
-  Select,
-  SimpleGrid
-} from "@chakra-ui/react";
+import { Flex, GridItem, Heading, Select, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ATrending from "../common/components/ATrending";
+import Loader from "../common/components/Loader";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
@@ -65,68 +61,82 @@ const Home = () => {
     }
   }, [mostTrending]);
 
-  return (
-    <Layout>
-      <SimpleGrid columns={6} gap={8}>
-        <GridItem className={styles.wrapper} colSpan={5}>
-          <SimpleGrid columns={3}>
-            <GridItem colSpan={1} w="max-content">
-              <Heading fontSize="3xl">Trending</Heading>
-              <Flex mt={4} mb={6}>
-                <Select
-                  placeholder="Any Media"
-                  size="md"
-                  name="mediaType"
-                  variant="filled"
-                  w="fit-content"
-                  mr={4}
-                  fontWeight="semibold"
-                  onChange={(e) => setMediaType(e.target.value || "all")}
-                >
-                  <option value="movie">Movies</option>
-                  <option value="tv">Shows</option>
-                  <option value="person" disabled>
-                    Casts
-                  </option>
-                </Select>
-                <Select
-                  placeholder="Any Timeframe"
-                  name="timeframe"
-                  size="md"
-                  w="fit-content"
-                  variant="filled"
-                  fontWeight="semibold"
-                  onChange={(e) => setTimeframe(e.target.value || "week")}
-                >
-                  <option value="day">Today</option>
-                  <option value="week">This Week</option>
-                </Select>
-              </Flex>
-              <TCard
-                trendingData={trendingData}
-                cardHover={(data) => {
-                  setMostTrending(data);
-                }}
-              />
-            </GridItem>
-            <GridItem colSpan={2}>
-              <MTrending
-                mostTrending={mostTrending}
-                mostTrendingInfo={mostTrendingInfo}
-                mainGenres={mainGenres}
-                mostTrendingVideos={mostTrendingVideos}
-                mostTrendingImages={mostTrendingImages}
-                castData={castData}
-              />
-            </GridItem>
-          </SimpleGrid>
-        </GridItem>
-        <GridItem>
-          {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
-        </GridItem>
-      </SimpleGrid>
-    </Layout>
-  );
+  if (
+    (!trendingData,
+    !mostTrending,
+    !mostTrendingInfo,
+    !otherPopular,
+    !mainGenres,
+    !mostTrendingVideos,
+    !mostTrendingImages,
+    !castData,
+    !mediaType,
+    !timeframe)
+  ) {
+    return null;
+  } else
+    return (
+      <Layout>
+        <SimpleGrid columns={6} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={5}>
+            <SimpleGrid columns={3}>
+              <GridItem colSpan={1} w="max-content">
+                <Heading fontSize="3xl">Trending</Heading>
+                <Flex mt={4} mb={6}>
+                  <Select
+                    placeholder="Any Media"
+                    size="md"
+                    name="mediaType"
+                    variant="filled"
+                    w="fit-content"
+                    mr={4}
+                    fontWeight="semibold"
+                    onChange={(e) => setMediaType(e.target.value || "all")}
+                  >
+                    <option value="movie">Movies</option>
+                    <option value="tv">Shows</option>
+                    <option value="person" disabled>
+                      Casts
+                    </option>
+                  </Select>
+                  <Select
+                    placeholder="Any Timeframe"
+                    name="timeframe"
+                    size="md"
+                    w="fit-content"
+                    variant="filled"
+                    fontWeight="semibold"
+                    onChange={(e) => setTimeframe(e.target.value || "week")}
+                  >
+                    <option value="day">Today</option>
+                    <option value="week">This Week</option>
+                  </Select>
+                </Flex>
+                <TCard
+                  trendingData={trendingData}
+                  cardHover={(data) => {
+                    setMostTrending(data);
+                  }}
+                />
+              </GridItem>
+              <GridItem colSpan={2}>
+                <MTrending
+                  mostTrending={mostTrending}
+                  mostTrendingInfo={mostTrendingInfo}
+                  mainGenres={mainGenres}
+                  mostTrendingVideos={mostTrendingVideos}
+                  mostTrendingImages={mostTrendingImages}
+                  castData={castData}
+                />
+              </GridItem>
+            </SimpleGrid>
+          </GridItem>
+          <GridItem>
+            {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
+          </GridItem>
+        </SimpleGrid>
+      </Layout>
+    );
 };
 
 export default Home;

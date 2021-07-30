@@ -1,6 +1,12 @@
 import {
-  Avatar, Badge, Box, Flex, Link, Text, Tooltip,
-  WrapItem
+  Avatar,
+  Badge,
+  Box,
+  Flex,
+  Link,
+  Text,
+  Tooltip,
+  WrapItem,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
