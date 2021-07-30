@@ -1,12 +1,17 @@
-import { Box, Flex, Grid, GridItem, Heading, Select, SimpleGrid } from "@chakra-ui/react";
+import {
+  Flex, GridItem,
+  Heading,
+  Select,
+  SimpleGrid
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ATrending from "../common/components/ATrending";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCard from "../common/components/TCard";
 import convertGenres from "../common/lib/convertGenres";
-import getInfo from "../common/lib/getInfo";
 import getCast from "../common/lib/getCast";
+import getInfo from "../common/lib/getInfo";
 import media from "../common/lib/getMedia";
 import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
@@ -42,9 +47,7 @@ const Home = () => {
   useEffect(() => {
     if (mostTrending) {
       const res = mostTrending;
-      console.log(res);
       getCast(res.id, res.media_type).then((cast) => {
-        console.log(cast);
         setCastData(cast.cast.splice(0, castToDisplay));
       });
       getInfo(res.id, res.media_type).then((info) => {
@@ -56,8 +59,7 @@ const Home = () => {
       media.getImages(res.id, res.media_type).then((images) => {
         setMostTrendingImages(images);
       });
-      convertGenres(res.media_type, res.genre_ids).then((genres) => {
-        console.log(genres);
+      convertGenres(res.media_type, res.genre_ids, 3).then((genres) => {
         setMainGenres(genres);
       });
     }
@@ -68,7 +70,7 @@ const Home = () => {
       <SimpleGrid columns={6} gap={8}>
         <GridItem className={styles.wrapper} colSpan={5}>
           <SimpleGrid columns={3}>
-            <GridItem colSpan={1}>
+            <GridItem colSpan={1} w="max-content">
               <Heading fontSize="3xl">Trending</Heading>
               <Flex mt={4} mb={6}>
                 <Select

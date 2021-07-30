@@ -3,25 +3,19 @@ import {
   Box,
   Flex,
   Heading,
-  Image,
-  Tab,
+  Img,
   Link,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Text,
   Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
-import React from "react";
 import NextLink from "next/link";
+import React from "react";
 import styles from "../../styles/Home.module.scss";
 import checkMediaType from "../lib/checkMediaType";
 import formatRuntime from "../utils/formatRuntime";
-import randElems from "../utils/getRandElems";
 import Cast from "./Cast";
-import EmbeddedYT from "./EmbeddedYT";
+import Loader from "./Loader";
+import Media from "./Media";
 
 const MTrending = ({
   mostTrending,
@@ -31,17 +25,16 @@ const MTrending = ({
   mostTrendingImages,
   castData,
 }) => {
-  console.log(mostTrendingImages);
   const mediaMax = 3;
   if (
     !mostTrending ||
     !mainGenres ||
+    !castData ||
     !mostTrendingVideos ||
     !mostTrendingImages ||
-    !mostTrendingInfo ||
-    !castData
+    !mostTrendingInfo
   ) {
-    return null;
+    return <Loader />;
   } else {
     return (
       <div>
@@ -51,16 +44,17 @@ const MTrending = ({
             as={checkMediaType("as", mostTrending.media_type, mostTrending)}
           >
             <Link>
-              <Image
+              <Img
                 src={checkMediaType(
                   "imgSrcBackdrop",
                   mostTrending.media_type,
-                  mostTrending
+                  mostTrending,
+                  "original"
                 )}
-                fallbackSrc={"/noMoviePoster.jpg"}
+                fallbacksrc={"/noMoviePoster.jpg"}
                 alt=""
                 borderRadius="25px"
-              ></Image>
+              ></Img>
               <Heading
                 size="lg"
                 position="absolute"
@@ -134,7 +128,7 @@ const MTrending = ({
             <Box minWidth="max-content" mr={8}>
               <Flex mt={12}>
                 <Wrap spacing="1.25vw">
-                  <Cast castData={castData} />
+                  <Cast castData={castData} returnDesc={false} />
                 </Wrap>
               </Flex>
             </Box>
@@ -142,14 +136,14 @@ const MTrending = ({
               <Box>
                 <p
                   style={{
-                    textAlign: "left",
+                    textAlign: "justify",
                     marginTop: "2vh",
                     display: "-webkit-box",
                     WebkitLineClamp: 4,
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    lineHeight: "1.75",
+                    lineHeight: "2",
                   }}
                 >
                   {mostTrending.overview}
@@ -158,76 +152,10 @@ const MTrending = ({
             </Box>
           </Flex>
         </Box>
-        <Tabs variant="enclosed" mt={24}>
-          <TabList>
-            <Tab>
-              Videos (
-              {mostTrendingVideos.length > mediaMax
-                ? mediaMax
-                : mostTrendingVideos.length}
-              )
-            </Tab>
-            <Tab>
-              Images (
-              {randElems.getRandElemsFilter(
-                mostTrendingImages.posters,
-                mediaMax,
-                "iso_639_1",
-                "en" || "fr"
-              )[1].length > mediaMax
-                ? mediaMax
-                : randElems.getRandElemsFilter(
-                    mostTrendingImages.posters,
-                    mediaMax,
-                    "iso_639_1",
-                    "en" || "fr"
-                  )[1]}
-              )
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Flex mt={8} justify="center">
-                <Wrap spacing="2vw">
-                  {randElems
-                    .getRandElems(mostTrendingVideos, mediaMax)
-                    .map((embbededId) => (
-                      <WrapItem key={embbededId}>
-                        <EmbeddedYT embeddedKey={embbededId} />
-                      </WrapItem>
-                    ))}
-                </Wrap>
-              </Flex>
-            </TabPanel>
-            <TabPanel>
-              <Flex mt={8} justify="center">
-                <Wrap spacing="2vw">
-                  {randElems
-                    .getRandElemsFilter(
-                      mostTrendingImages.posters,
-                      mediaMax,
-                      "iso_639_1",
-                      "en" || "fr"
-                    )[0]
-                    .map((img) => {
-                      return (
-                        <WrapItem
-                          key={img.file_path.split("/")[1].split(".")[0]}
-                        >
-                          <Image
-                            src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
-                            fallbackSrc={"/noMoviePoster.jpg"}
-                            alt={img.file_path}
-                            className={styles.responsiveImg}
-                          />
-                        </WrapItem>
-                      );
-                    })}
-                </Wrap>
-              </Flex>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <Media
+          mostTrendingImages={mostTrendingImages}
+          mostTrendingVideos={mostTrendingVideos}
+        />
       </div>
     );
   }

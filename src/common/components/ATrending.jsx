@@ -1,6 +1,6 @@
 import {
   Box,
-  Image,
+  Img,
   Stat,
   StatArrow,
   StatGroup,
@@ -16,11 +16,11 @@ const ATrending = ({ otherPopular }) => {
   return otherPopular.map((actor, i) => (
     <div key={i} className={styles.actorCard}>
       <Box>
-        <Image
+        <Img
           src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
           alt={`${actor.name}'s photo`}
           className={styles.actorImg}
-        ></Image>
+        ></Img>
         <Text fontSize="xl">{actor.name}</Text>
         <br />
         <StatGroup>

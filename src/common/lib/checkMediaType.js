@@ -1,4 +1,4 @@
-const checkMediaType = (useCase, queryType, data) => {
+const checkMediaType = (useCase, queryType, data, imgSize) => {
   switch (useCase) {
     case "href":
       if (queryType === "movie") {
@@ -30,26 +30,37 @@ const checkMediaType = (useCase, queryType, data) => {
         ? `${data.overview}`
         : `${data.known_for_department}`;
 
+    case "bio":
+      return queryType === "person" ? `${data.biography}` : "";
+
     case "imgSrc":
       if (queryType === "movie" || queryType === "tv") {
         return !data.poster_path
           ? undefined
-          : `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+          : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
+              data.poster_path
+            }`;
       } else {
         return !data.profile_path
           ? undefined
-          : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+          : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
+              data.profile_path
+            }`;
       }
 
     case "imgSrcBackdrop":
       if (queryType === "movie" || queryType === "tv") {
         return !data.poster_path
           ? undefined
-          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
+          : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "orginal"}${
+              data.backdrop_path
+            }`;
       } else {
         return !data.profile_path
           ? undefined
-          : `https://image.tmdb.org/t/p/w500${data.profile_path}`;
+          : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
+              data.profile_path
+            }`;
       }
 
     case "runtime":

@@ -1,6 +1,6 @@
 import getGenre from "./getGenre";
 
-const convertGenres = async (mediaType, genreIds) => {
+const convertGenres = async (mediaType, genreIds, genreAm) => {
   let convertedGenres = [];
   if (mediaType === "person") return [];
   return getGenre.genres().then((genres) => {
@@ -8,7 +8,7 @@ const convertGenres = async (mediaType, genreIds) => {
       return (convertedGenres = genres.filter((genre) => {
         return genre.id === parseInt(genreIds) ? genre : null;
       }));
-    } else {
+    } else if (genreIds) {
       for (let g of genreIds) {
         genres.find((genre) =>
           genre.id === g
@@ -16,7 +16,7 @@ const convertGenres = async (mediaType, genreIds) => {
             : null
         );
       }
-      return convertedGenres.splice(0, 3);
+      return convertedGenres.splice(0, genreAm);
     }
   });
 };

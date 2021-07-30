@@ -3,7 +3,7 @@ import {
   Box,
   Flex,
   IconButton,
-  Image,
+  Img,
   Link,
   Menu,
   MenuButton,
@@ -40,7 +40,7 @@ const NavBar = () => {
     <Flex className={styles.header}>
       <NextLink href="/" rel="noopener noreferrer">
         <Link className={styles.logoCont}>
-          <Image src="/logo.png" alt="logo" className={styles.logo} />
+          <Img src="/logo.png" alt="logo" className={styles.logo} />
           <div className={styles.logoText}>
             <p>LightFlix</p>
           </div>

@@ -1,4 +1,13 @@
-import { Box, Center, Flex, Image, Link, Spacer, Tag, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Img,
+  Link,
+  Spacer,
+  Tag,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import checkMediaType from "../lib/checkMediaType";
@@ -19,7 +28,6 @@ const SCard = ({ query, clickHandler }) => {
   } else if (searchData?.results?.length === 0) {
     return "No movies match your query";
   } else {
-    console.log(searchData);
     return searchData?.results.map((data) => (
       <div
         key={data.id}
@@ -36,9 +44,9 @@ const SCard = ({ query, clickHandler }) => {
           <Link>
             <Flex color="white">
               <Center>
-                <Image
+                <Img
                   src={checkMediaType("imgSrc", data.media_type, data)}
-                  fallbackSrc={"/noMoviePoster.jpg"}
+                  fallbacksrc={"/noMoviePoster.jpg"}
                   alt=""
                   style={{
                     borderRadius: "10px",
@@ -57,7 +65,9 @@ const SCard = ({ query, clickHandler }) => {
                 }}
               >
                 <Flex mb={8}>
-                  <Heading size="md" pt={2} mr={8}>{checkMediaType("title", data.media_type, data)}</Heading>
+                  <Heading size="md" pt={2} mr={8}>
+                    {checkMediaType("title", data.media_type, data)}
+                  </Heading>
                   <Spacer />
                   <Tag textTransform="capitalize">{data.media_type}</Tag>
                 </Flex>

@@ -3,27 +3,25 @@ import {
   Center,
   Flex,
   Heading,
-  Image,
+  Img,
   Link,
   Spacer,
   Tag,
-  IconButton,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import checkMediaType from "../lib/checkMediaType";
 
 const TCard = ({ trendingData, cardHover }) => {
+  const cardsToRemove = 11;
   const [trendingCards, setTrendingCards] = useState();
-  const [trendingDataCursor, setTrendingDataCursor] = useState(10);
+  const [trendingDataCursor, setTrendingDataCursor] = useState(cardsToRemove);
   useEffect(() => {
     if (trendingData) {
       let tData = trendingData.slice(
         0,
         trendingData.length - trendingDataCursor
       );
-      console.log(tData);
       setTrendingCards(tData);
     }
   }, [trendingData, trendingDataCursor]);
@@ -47,9 +45,9 @@ const TCard = ({ trendingData, cardHover }) => {
           <Link>
             <Flex color="white">
               <Center>
-                <Image
+                <Img
                   src={checkMediaType("imgSrc", data.media_type, data)}
-                  fallbackSrc={"/noMoviePoster.jpg"}
+                  fallbacksrc={"/noMoviePoster.jpg"}
                   alt=""
                   style={{
                     borderRadius: "10px",
