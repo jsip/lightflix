@@ -67,9 +67,8 @@ const Cast = ({ castInfo }) => {
                         <Box pt={1}>
                           <Heading fontSize="2xl">
                             {castInfo.known_for_department
-                              ? `Primarily known for ${
-                                  castInfo.gender === 1 ? "her" : "his"
-                                } ${castInfo.known_for_department.toLowerCase()}`
+                              ? `Primarily known for ${castInfo.gender === 1 ? "her" : "his"
+                              } ${castInfo.known_for_department.toLowerCase()}`
                               : null}
                           </Heading>
                         </Box>
@@ -82,9 +81,9 @@ const Cast = ({ castInfo }) => {
                   <WCards Id={castInfo.id} mediaType="person" />
                   <Stat mt={8}>
                     <StatLabel>Birth Information</StatLabel>
-                    <StatNumber>{castInfo.place_of_birth}</StatNumber>
+                    <StatNumber>{castInfo.place_of_birth ? castInfo.place_of_birth : "Unknown birthplace"}</StatNumber>
                     <StatHelpText>
-                      {new Date(castInfo.birthday).toDateString()}
+                      {castInfo.birthday ? new Date(castInfo.birthday).toDateString() : "Unknown birthday"}
                       {castInfo.deathday
                         ? ` - ${new Date(castInfo.deathday).toDateString()}`
                         : null}
