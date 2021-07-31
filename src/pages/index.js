@@ -11,7 +11,7 @@ import getInfo from "../common/lib/getInfo";
 import media from "../common/lib/getMedia";
 import getPopularPeople from "../common/lib/getPopularPeople";
 import getTrending from "../common/lib/getTrending";
-import getBiggestVal from "../common/utils/getBiggestVal";
+import getBiggest from "../common/utils/getBiggest";
 import styles from "../styles/Home.module.scss";
 
 const Home = () => {
@@ -31,7 +31,8 @@ const Home = () => {
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
       setTrendingData(trending.results);
-      getBiggestVal(trending.results).then((res) => {
+      getBiggest.Val(trending.results).then((res) => {
+        console.log(res);
         setMostTrending(res);
       });
     });

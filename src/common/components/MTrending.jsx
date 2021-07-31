@@ -8,6 +8,7 @@ import {
   Text,
   Wrap,
 } from "@chakra-ui/react";
+import { m } from "framer-motion";
 import NextLink from "next/link";
 import React from "react";
 import styles from "../../styles/Home.module.scss";
@@ -36,6 +37,7 @@ const MTrending = ({
   ) {
     return <Loader />;
   } else {
+    console.log(mostTrending);
     return (
       <div>
         <div style={{ position: "relative" }}>

@@ -35,6 +35,7 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Movie = ({ movieInfo }) => {
+  console.log(movieInfo);
   const castToDisplay = 6;
   const [castData, setCastData] = useState();
   const [directorData, setDirectorData] = useState();

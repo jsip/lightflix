@@ -11,11 +11,16 @@ import {
   StatHelpText,
   StatLabel,
   StatNumber,
+  Stack,
+  Text,
+  Divider,
 } from "@chakra-ui/react";
-import { React } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../common/components/Layout";
+import WCards from "../../common/components/WCards";
 import checkMediaType from "../../common/lib/checkMediaType";
 import getInfo from "../../common/lib/getInfo";
+import getWork from "../../common/lib/getWork";
 import styles from "../../styles/Home.module.scss";
 
 export const getServerSideProps = async ({ params }) => {
@@ -28,72 +33,75 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Cast = ({ castInfo }) => {
-  return (
-    <Layout>
-      <SimpleGrid columns={6} gap={8}>
-        <GridItem className={styles.wrapper} colSpan={5}>
-          <SimpleGrid columns={3}>
-            <GridItem colSpan={1}>
-              <Img
-                src={checkMediaType("imgSrc", "person", castInfo)}
-                alt=""
-                borderRadius="25px"
-              />
-            </GridItem>
-            <GridItem colSpan={2}>
-              <Box ml={8}>
-                <Box mb={12}>
-                  <Heading fontSize="5xl">
-                    {checkMediaType("title", "person", castInfo)}
-                  </Heading>
-                  <Heading fontSize="2xl">
-                    {castInfo.also_known_as.length > 0
-                      ? "Also known as " +
-                        castInfo.also_known_as[
-                          Math.floor(
-                            Math.random() * castInfo.also_known_as.length
-                          )
-                        ]
-                      : null}
-                  </Heading>
-                </Box>
-                <Flex>
-                  <Box>
-                    <StatGroup>
-                      <Stat>
-                        <StatLabel>Popularity Index</StatLabel>
-                        <StatNumber>{castInfo.popularity}</StatNumber>
-                        <StatHelpText>
-                          <StatArrow
-                            type={Math.random() > 0.5 ? "increase" : "decrease"}
-                          />
-                          {Math.ceil(Math.random() * 50)}%
-                        </StatHelpText>
-                      </Stat>
-                    </StatGroup>
+  console.log(castInfo);
+  const [castWork, setCastWork] = useState();
+  useEffect(() => {
+    getWork.work(castInfo.id).then((work) => setCastWork(work));
+  }, [castInfo.id]);
+  if (!castInfo) {
+    return null;
+  } else {
+    return (
+      <Layout>
+        <SimpleGrid columns={6} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={5}>
+            <SimpleGrid columns={3}>
+              <GridItem colSpan={1}>
+                <Img
+                  src={checkMediaType("imgSrc", "person", castInfo)}
+                  alt=""
+                  borderRadius="25px"
+                />
+              </GridItem>
+              <GridItem colSpan={2}>
+                <Box ml={8}>
+                  <Box mb={16}>
+                    <Flex>
+                      <Stack direction="row" mt={2}>
+                        <StatGroup>
+                          <Stat>
+                            <StatNumber>{castInfo.popularity}</StatNumber>
+                          </Stat>
+                          <Divider orientation="vertical" ml={3} />
+                        </StatGroup>
+                        <Box pt={1}>
+                          <Heading fontSize="2xl">
+                            {castInfo.known_for_department
+                              ? `Primarily known for ${
+                                  castInfo.gender === 1 ? "her" : "his"
+                                } ${castInfo.known_for_department.toLowerCase()}`
+                              : null}
+                          </Heading>
+                        </Box>
+                      </Stack>
+                    </Flex>
+                    <Heading fontSize="5xl" mb={2}>
+                      {checkMediaType("title", "person", castInfo)}
+                    </Heading>
                   </Box>
-                </Flex>
-                <Box mt={2} alignItems="center" justifyContent="center">
-                  <Heading fontSize="2xl">
-                    {castInfo.known_for_department
-                      ? `Known for ${
-                          castInfo.gender === 1 ? "her" : "his"
-                        } ${castInfo.known_for_department.toLowerCase()}`
-                      : null}
-                  </Heading>
+                  <WCards Id={castInfo.id} mediaType="person" />
+                  <Stat mt={8}>
+                    <StatLabel>Birth Information</StatLabel>
+                    <StatNumber>{castInfo.place_of_birth}</StatNumber>
+                    <StatHelpText>
+                      {new Date(castInfo.birthday).toDateString()}
+                      {castInfo.deathday
+                        ? ` - ${new Date(castInfo.deathday).toDateString()}`
+                        : null}
+                    </StatHelpText>
+                  </Stat>
+                  <Box mt={8}>{checkMediaType("bio", "person", castInfo)}</Box>
                 </Box>
-                <Flex mt={2} mb={8}></Flex>
-                <Box>{checkMediaType("bio", "person", castInfo)}</Box>
-              </Box>
-            </GridItem>
-          </SimpleGrid>
-        </GridItem>
-        <GridItem className={styles.wrapper} colSpan={1}>
-          <Heading>Similar</Heading>
-        </GridItem>
-      </SimpleGrid>
-    </Layout>
-  );
+              </GridItem>
+            </SimpleGrid>
+          </GridItem>
+          <GridItem className={styles.wrapper} colSpan={1}>
+            <Heading>Similar</Heading>
+          </GridItem>
+        </SimpleGrid>
+      </Layout>
+    );
+  }
 };
 
 export default Cast;
