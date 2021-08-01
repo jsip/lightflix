@@ -100,9 +100,11 @@ const Movie = ({ movieInfo }) => {
                       {checkMediaType("title", "movie", movieInfo)}
                     </Heading>
                     <Heading fontSize="4xl" opacity={0.5}>
-                      <q>
-                        <i>{movieInfo.tagline}</i>
-                      </q>
+                      {movieInfo.tagline ?
+                        <q>
+                          <i>{movieInfo.tagline}</i>
+                        </q>
+                        : null}
                     </Heading>
                   </Box>
                   <span style={{ fontSize: "3vh" }}>
@@ -113,27 +115,28 @@ const Movie = ({ movieInfo }) => {
                     <Box>
                       {movieInfo
                         ? movieInfo.genres.map((genre) => (
-                            <NextLink
-                              key={genre.id}
-                              href={checkMediaType("href", "genre", genre)}
-                              as={checkMediaType("as", "genre", genre)}
-                            >
-                              <Link>
-                                <Badge
-                                  verticalAlign="baseline"
-                                  key={genre.id}
-                                  mr={2}
-                                >
-                                  {genre.name}
-                                </Badge>
-                              </Link>
-                            </NextLink>
-                          ))
+                          <NextLink
+                            key={genre.id}
+                            href={checkMediaType("href", "genre", genre)}
+                            as={checkMediaType("as", "genre", genre)}
+                          >
+                            <Link>
+                              <Badge
+                                verticalAlign="baseline"
+                                key={genre.id}
+                                mr={2}
+                              >
+                                {genre.name}
+                              </Badge>
+                            </Link>
+                          </NextLink>
+                        ))
+                        : null}
+                      {movieInfo.genres.length > 0 ?
+                        <span style={{ fontWeight: "800" }}>-&nbsp;&nbsp;</span>
                         : null}
                     </Box>
                     <Text fontWeight="600">
-                      <span style={{ fontWeight: "800" }}>-</span>
-                      &nbsp;&nbsp;
                       {formatRuntime(
                         checkMediaType("runtime", "movie", movieInfo)
                       )}
@@ -153,7 +156,7 @@ const Movie = ({ movieInfo }) => {
                 </Box>
               </GridItem>
             </SimpleGrid>
-            <RCards mediaType={"movie"} Id={movieInfo.id} />
+            <RCards mediaType={"movie"} Id={movieInfo.id} fallbackId={"379686"} />
           </GridItem>
         </SimpleGrid>
       </Layout>
