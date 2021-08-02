@@ -22,6 +22,7 @@ import checkMediaType from "../../common/lib/checkMediaType";
 import getInfo from "../../common/lib/getInfo";
 import getWork from "../../common/lib/getWork";
 import styles from "../../styles/Home.module.scss";
+import formatLongP from "../../common/utils/formatLongP";
 
 export const getServerSideProps = async ({ params }) => {
   const castInfo = await getInfo(params.cast, "person");
@@ -55,7 +56,7 @@ const Cast = ({ castInfo }) => {
               </GridItem>
               <GridItem colSpan={2}>
                 <Box ml={8}>
-                  <Box mb={16}>
+                  <Box mb={4}>
                     <Flex>
                       <Stack direction="row" mt={2}>
                         <StatGroup>
@@ -74,12 +75,11 @@ const Cast = ({ castInfo }) => {
                         </Box>
                       </Stack>
                     </Flex>
-                    <Heading fontSize="5xl" mb={2}>
+                    <Heading fontSize="5xl">
                       {checkMediaType("title", "person", castInfo)}
                     </Heading>
                   </Box>
-                  <WCards Id={castInfo.id} mediaType="person" />
-                  <Stat mt={8}>
+                  <Stat>
                     <StatLabel>Birth Information</StatLabel>
                     <StatNumber>{castInfo.place_of_birth ? castInfo.place_of_birth : "Unknown birthplace"}</StatNumber>
                     <StatHelpText>
@@ -89,10 +89,11 @@ const Cast = ({ castInfo }) => {
                         : null}
                     </StatHelpText>
                   </Stat>
-                  <Box mt={8}>{checkMediaType("bio", "person", castInfo)}</Box>
+                  <Box mt={8}>{formatLongP(checkMediaType("bio", "person", castInfo))}</Box>
                 </Box>
               </GridItem>
             </SimpleGrid>
+            <WCards Id={castInfo.id} mediaType="person" />
           </GridItem>
           <GridItem className={styles.wrapper} colSpan={1}>
             <Heading>Similar</Heading>

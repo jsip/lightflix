@@ -15,8 +15,9 @@ export const getServerSideProps = async ({ params }) => {
 const Genre = ({ genreInfo }) => {
   const [genre, setGenre] = useState();
   useEffect(() => {
-    convertGenres(undefined, genreInfo).then((genre) => setGenre(genre));
+    convertGenres(undefined, genreInfo, 0).then((genre) => { setGenre(genre) });
   }, [genreInfo]);
+  console.log(genre);
   if (!genre) {
     return null;
   } else return <Layout>{<Box>{genre.name}</Box>}</Layout>;
