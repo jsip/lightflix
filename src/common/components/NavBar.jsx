@@ -21,7 +21,7 @@ import NextLink from "next/link";
 import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.scss";
 import GetRouterPath from "../utils/getRouterPath";
-import SCard from "./SCard";
+import SCards from "./SCards";
 import Search from "./Search";
 
 const NavBar = () => {
@@ -102,7 +102,7 @@ const NavBar = () => {
               borderRadius: "15px",
             }}
           >
-            <SCard query={query} clickHandler={clickHandler} />
+            <SCards query={query} clickHandler={clickHandler} />
           </div>
         )}
       </Box>

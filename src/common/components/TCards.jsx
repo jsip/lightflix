@@ -12,7 +12,7 @@ import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import checkMediaType from "../lib/checkMediaType";
 
-const TCard = ({ trendingData, cardHover }) => {
+const TCards = ({ trendingData, cardHover }) => {
   const cardsToRemove = 11;
   const [trendingCards, setTrendingCards] = useState();
   const [trendingDataCursor, setTrendingDataCursor] = useState(cardsToRemove);
@@ -104,4 +104,4 @@ const TCard = ({ trendingData, cardHover }) => {
   }
 };
 
-export default TCard;
+export default TCards;

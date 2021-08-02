@@ -14,7 +14,7 @@ import checkMediaType from "../lib/checkMediaType";
 import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
-const SCard = ({ query, clickHandler }) => {
+const SCards = ({ query, clickHandler }) => {
   let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=`;
   const [searchData, setSearchData] = useState();
   useEffect(() => {
@@ -91,4 +91,4 @@ const SCard = ({ query, clickHandler }) => {
   }
 };
 
-export default SCard;
+export default SCards;

@@ -4,7 +4,7 @@ import ATrending from "../common/components/ATrending";
 import Loader from "../common/components/Loader";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
-import TCard from "../common/components/TCard";
+import TCards from "../common/components/TCards";
 import convertGenres from "../common/lib/convertGenres";
 import getCast from "../common/lib/getCast";
 import getInfo from "../common/lib/getInfo";
@@ -113,7 +113,7 @@ const Home = () => {
                     <option value="week">This Week</option>
                   </Select>
                 </Flex>
-                <TCard
+                <TCards
                   trendingData={trendingData}
                   cardHover={(data) => {
                     setMostTrending(data);
