@@ -34,7 +34,6 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Cast = ({ castInfo }) => {
-  console.log(castInfo);
   const [castWork, setCastWork] = useState();
   useEffect(() => {
     getWork.work(castInfo.id).then((work) => setCastWork(work));
@@ -42,6 +41,7 @@ const Cast = ({ castInfo }) => {
   if (!castInfo) {
     return null;
   } else {
+    console.log(castInfo);
     return (
       <Layout>
         <SimpleGrid columns={6} gap={8}>
@@ -68,8 +68,9 @@ const Cast = ({ castInfo }) => {
                         <Box pt={1}>
                           <Heading fontSize="2xl">
                             {castInfo.known_for_department
-                              ? `Primarily known for ${castInfo.gender === 1 ? "her" : "his"
-                              } ${castInfo.known_for_department.toLowerCase()}`
+                              ? `Primarily known for ${
+                                  castInfo.gender === 1 ? "her" : "his"
+                                } ${castInfo.known_for_department.toLowerCase()}`
                               : null}
                           </Heading>
                         </Box>
@@ -79,21 +80,32 @@ const Cast = ({ castInfo }) => {
                       {checkMediaType("title", "person", castInfo)}
                     </Heading>
                   </Box>
-                  <Stat>
+                  <Stat mt={16}>
                     <StatLabel>Birth Information</StatLabel>
-                    <StatNumber>{castInfo.place_of_birth ? castInfo.place_of_birth : "Unknown birthplace"}</StatNumber>
+                    <StatNumber>
+                      {castInfo.place_of_birth
+                        ? castInfo.place_of_birth
+                        : "Unknown birthplace"}
+                    </StatNumber>
                     <StatHelpText>
-                      {castInfo.birthday ? new Date(castInfo.birthday).toDateString() : "Unknown birthday"}
+                      {castInfo.birthday
+                        ? new Date(castInfo.birthday).toDateString()
+                        : "Unknown birthday"}
                       {castInfo.deathday
                         ? ` - ${new Date(castInfo.deathday).toDateString()}`
                         : null}
                     </StatHelpText>
                   </Stat>
-                  <Box mt={8}>{formatLongP(checkMediaType("bio", "person", castInfo))}</Box>
+                  <WCards Id={castInfo.id} />
                 </Box>
               </GridItem>
             </SimpleGrid>
-            <WCards Id={castInfo.id} mediaType="person" />
+            <Box mt={8}>
+              <Heading fontSize="3xl" mb={4}>
+                About {castInfo.name}
+              </Heading>
+              {formatLongP(checkMediaType("bio", "person", castInfo))}
+            </Box>
           </GridItem>
           <GridItem className={styles.wrapper} colSpan={1}>
             <Heading>Similar</Heading>

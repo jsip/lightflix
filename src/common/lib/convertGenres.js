@@ -5,9 +5,9 @@ const convertGenres = async (mediaType, genreIds, genreAm) => {
   if (mediaType === "person") return [];
   return getGenre.genres().then((genres) => {
     if (typeof genreIds === "string") {
-      return (convertedGenres = genres.filter((genre) => {
-        return genre.id === parseInt(genreIds) ? genre : null;
-      }));
+      return (convertedGenres = genres.filter((genre) => 
+        genre.id === parseInt(genreIds) ? genre : null
+      ));
     } else if (genreIds) {
       for (let g of genreIds) {
         genres.find((genre) =>

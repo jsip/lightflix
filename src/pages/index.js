@@ -31,7 +31,7 @@ const Home = () => {
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
       setTrendingData(trending.results);
-      getBiggest.Val(trending.results).then((res) => {
+      getBiggest.Val(trending.results, "popularity").then((res) => {
         console.log(res);
         setMostTrending(res);
       });

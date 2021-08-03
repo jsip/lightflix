@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const formatLongP = (paragraph) => {
-    let sentences = paragraph.split(". ");
-    console.log(sentences);
-    return paragraph
-}
+  return paragraph;
+};
 
-export default formatLongP
+export default formatLongP;

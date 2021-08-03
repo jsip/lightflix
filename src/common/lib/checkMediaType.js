@@ -64,7 +64,11 @@ const checkMediaType = (useCase, queryType, data, imgSize) => {
       }
 
     case "runtime":
-      return queryType === "movie" ? data.runtime : data.episode_run_time;
+      return queryType === "movie"
+        ? data.runtime
+        : typeof data.episode_run_time !== "string"
+        ? data.episode_run_time[0]
+        : data.episode_run_time;
 
     case "releaseDate":
       if (data.release_date) {
