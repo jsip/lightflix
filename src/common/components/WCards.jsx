@@ -13,7 +13,8 @@ const WCards = ({ Id }) => {
 	const [genreArray, setGenreArray] = useState([]);
 	const [notableGenres, setNotableGenres] = useState([]);
 	useEffect(() => {
-		getWork.work(Id).then(async (work) => {
+		let gArr = [0];
+		getWork.work(Id).then((work) => {
 			let _genres = [];
 			for (let w of work) {
 				_genres.push(...w.genre_ids);
@@ -22,30 +23,21 @@ const WCards = ({ Id }) => {
 				(acum, cur) => Object.assign(acum, { [cur]: (acum[cur] || 0) + 1 }),
 				{},
 			);
-			let genresArray = [];
-			console.log(work, genres, _genres);
-			Object.keys(genres)
+			console.log(work, genres, _genres, gArr);
+
+			const key = Object.keys(genres)
 				.sort((a, b) => genres[b] - genres[a])
-				.slice(0, cardsToDisplay)
-				.forEach(async (key) => {
-					console.log(key);
-					let g = await convertGenres('movie/tv', key, 1).then((g) => g);
-					let gName = {
-						key: g[0].name,
-						id: parseInt(key),
-					};
-					console.log(gName);
-					genresArray.push(gName);
-				});
-			console.log(genresArray);
-			setGenreArray(genresArray);
+				.slice(0, cardsToDisplay);
+
+			convertGenres('movie/tv', key, 4).then((gen) => console.log(gen));
+
 			getBiggest.Vals(work, cardsToDisplay, 'popularity').then((vals) => {
 				console.log(vals);
 				vals = verifyMediaType(vals);
 				setRecommendedMovies(vals);
 			});
 		});
-	}, [Id]);
+	}, [Id, genreArray]);
 	useEffect(() => {
 		console.log(genreArray);
 		// create a function to return the 5 keys with the highest values

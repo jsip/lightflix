@@ -8,14 +8,16 @@ const convertGenres = async (mediaType, genreIds, genreAm) => {
       return (convertedGenres = genres.filter((genre) => 
         genre.id === parseInt(genreIds) ? genre : null
       ));
-    } else if (genreIds) {
+    } else if (typeof genreIds === "object") {
       for (let g of genreIds) {
+        console.log(g);
         genres.find((genre) =>
-          genre.id === g
+          genre.id == g
             ? (convertedGenres = [...convertedGenres, genre])
             : null
         );
       }
+      console.log(convertedGenres);
       return convertedGenres.splice(0, genreAm);
     }
   });
