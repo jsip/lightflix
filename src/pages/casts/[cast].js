@@ -12,6 +12,7 @@ import {
   StatLabel,
   StatNumber,
   Stack,
+  Wrap,
   Text,
   Divider,
 } from "@chakra-ui/react";
@@ -26,6 +27,7 @@ import styles from "../../styles/Home.module.scss";
 import formatLongP from "../../common/utils/formatLongP";
 import getBiggest from "../../common/utils/getBiggest";
 import getCast from "../../common/lib/getCast";
+import Cast from "../../common/components/Cast";
 
 export const getServerSideProps = async ({ params }) => {
   const castInfo = await getInfo(params.cast, "person");
@@ -38,37 +40,38 @@ export const getServerSideProps = async ({ params }) => {
 
 const CastPage = ({ castInfo }) => {
   const [castWork, setCastWork] = useState();
-  const [similarActors, setSimilarActors] = useState();
+  const [similarActors, setSimilarActors] = useState([]);
   useEffect(() => {
-    console.log(castInfo);
+    setSimilarActors([]);
     getWork.work(castInfo.id).then((work) => {
       setCastWork(work);
       getBiggest.Vals(work, 4, "popularity").then((vals) => {
-        let similarActors = [];
         vals = verifyMediaType(vals);
+        console.log(vals);
         for (let v of vals) {
-          console.log(v);
           getCast(v.id, v.media_type).then((castObj) => {
             console.log(castObj);
-            similarActors.push(
-              castObj.cast[0].id !== castInfo.id
-                ? castObj.cast[0]
-                : castObj.cast[1],
-              castObj.cast[0].id !== castInfo.id
-                ? castObj.cast[1]
-                : castObj.cast[2]
-            );
+            if (castObj.cast.length > 1) {
+              setSimilarActors((curr) => [
+                ...(curr || []),
+                castObj.cast[0].id !== castInfo.id
+                  ? castObj.cast[0] || null
+                  : castObj.cast[1] || null,
+                castObj.cast[0].id !== castInfo.id
+                  ? castObj.cast[1] || null
+                  : castObj.cast[2] || null,
+              ]);
+            } else {
+              setSimilarActors((curr) => [...curr]);
+            }
           });
         }
-        setSimilarActors(similarActors);
-        console.log(similarActors);
       });
     });
   }, [castInfo]);
-  if (!castInfo || !castWork) {
+  if (!castInfo || !castWork || !similarActors) {
     return null;
   } else {
-    console.log(castInfo);
     return (
       <Layout>
         <SimpleGrid columns={6} gap={8}>
@@ -107,7 +110,7 @@ const CastPage = ({ castInfo }) => {
                       {checkMediaType("title", "person", castInfo)}
                     </Heading>
                   </Box>
-                  <Stat mt={8}>
+                  <Stat mt={8} mb={12}>
                     <StatLabel>Birth Information</StatLabel>
                     <StatNumber>
                       {castInfo.place_of_birth
@@ -136,7 +139,13 @@ const CastPage = ({ castInfo }) => {
           </GridItem>
           <GridItem className={styles.wrapper} colSpan={1}>
             <Heading>Similar Cast</Heading>
-            <CastPage returnDesc="false" castData={similarActors} />
+            <Wrap spacing={"3.5vh"} mt={8}>
+              <Cast
+                returnDesc="false"
+                castData={similarActors}
+                disableTooltip
+              />
+            </Wrap>
           </GridItem>
         </SimpleGrid>
       </Layout>

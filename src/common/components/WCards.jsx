@@ -7,40 +7,37 @@ import getWork from "../lib/getWork";
 import verifyMediaType from "../lib/verifyMediaType";
 import convertGenres from "../lib/convertGenres";
 
-const WCards = ({ Id }) => {
+const WCards = ({ castWork }) => {
   const cardsToDisplay = 4;
   const [recommendedMovies, setRecommendedMovies] = useState();
   const [genreArray, setGenreArray] = useState([]);
   const [notableGenres, setNotableGenres] = useState([]);
   useEffect(() => {
     let gArr = [0];
-    getWork.work(Id).then((work) => {
-      let _genres = [];
-      for (let w of work) {
-        _genres.push(...w.genre_ids);
-      }
-      const genres = _genres.reduce(
-        (acum, cur) => Object.assign(acum, { [cur]: (acum[cur] || 0) + 1 }),
-        {}
-      );
-      console.log(work, genres, _genres, gArr);
+    let _genres = [];
+    for (let w of castWork) {
+      _genres.push(...w.genre_ids);
+    }
+    const genres = _genres.reduce(
+      (acum, cur) => Object.assign(acum, { [cur]: (acum[cur] || 0) + 1 }),
+      {}
+    );
+    console.log(castWork, genres, _genres, gArr);
 
-      const key = Object.keys(genres)
-        .sort((a, b) => genres[b] - genres[a])
-        .slice(0, cardsToDisplay);
+    const key = Object.keys(genres)
+      .sort((a, b) => genres[b] - genres[a])
+      .slice(0, cardsToDisplay);
 
-      convertGenres("movie/tv", key, 4).then((gen) => console.log(gen));
+    convertGenres("movie/tv", key, 4).then((gen) => setGenreArray(gen));
 
-      getBiggest.Vals(work, cardsToDisplay, "popularity").then((vals) => {
-        console.log(vals);
-        vals = verifyMediaType(vals);
-        setRecommendedMovies(vals);
-      });
+    getBiggest.Vals(castWork, cardsToDisplay, "popularity").then((vals) => {
+      console.log(vals);
+      vals = verifyMediaType(vals);
+      setRecommendedMovies(vals);
     });
-  }, [Id, genreArray]);
+  }, [castWork]);
   useEffect(() => {
     console.log(genreArray);
-    // create a function to return the 5 keys with the highest values
   }, [genreArray]);
   if (!recommendedMovies || !notableGenres || !genreArray) {
     return null;
@@ -48,26 +45,26 @@ const WCards = ({ Id }) => {
     console.log(genreArray);
     return (
       <div>
-        <Heading mb={6} fontSize="3xl">
+        <Heading mb={4} fontSize="3xl">
           Notable Genres
         </Heading>
-        {/* {genreArray
-					? genreArray.map((genre) => {
-							return (
-								<NextLink
-									key={genre.id}
-									href={checkMediaType('href', 'genre', genre)}
-									as={checkMediaType('as', 'genre', genre)}
-								>
-									<Link>
-										<Badge verticalAlign='baseline' mr={2}>
-											{genre.key}
-										</Badge>
-									</Link>
-								</NextLink>
-							);
-					  })
-					: 'red'} */}
+        {genreArray
+          ? genreArray.map((genre) => {
+              return (
+                <NextLink
+                  key={genre.id}
+                  href={checkMediaType("href", "genre", genre)}
+                  as={checkMediaType("as", "genre", genre)}
+                >
+                  <Link>
+                    <Badge verticalAlign="baseline" mr={2}>
+                      {genre.name}
+                    </Badge>
+                  </Link>
+                </NextLink>
+              );
+            })
+          : "red"}
         <Heading mb={6} mt={6} fontSize="3xl">
           Famous Roles
         </Heading>
