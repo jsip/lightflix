@@ -12,7 +12,7 @@ const convertGenres = async (mediaType, genreIds, genreAm) => {
       for (let g of genreIds) {
         console.log(g);
         genres.find((genre) =>
-          genre.id == g
+          parseInt(genre.id) == g
             ? (convertedGenres = [...convertedGenres, genre])
             : null
         );

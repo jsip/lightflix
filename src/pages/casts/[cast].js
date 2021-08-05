@@ -19,10 +19,13 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../common/components/Layout";
 import WCards from "../../common/components/WCards";
 import checkMediaType from "../../common/lib/checkMediaType";
+import verifyMediaType from "../../common/lib/verifyMediaType";
 import getInfo from "../../common/lib/getInfo";
 import getWork from "../../common/lib/getWork";
 import styles from "../../styles/Home.module.scss";
 import formatLongP from "../../common/utils/formatLongP";
+import getBiggest from "../../common/utils/getBiggest";
+import getCast from "../../common/lib/getCast";
 
 export const getServerSideProps = async ({ params }) => {
   const castInfo = await getInfo(params.cast, "person");
@@ -33,12 +36,36 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const Cast = ({ castInfo }) => {
+const CastPage = ({ castInfo }) => {
   const [castWork, setCastWork] = useState();
+  const [similarActors, setSimilarActors] = useState();
   useEffect(() => {
-    getWork.work(castInfo.id).then((work) => setCastWork(work));
-  }, [castInfo.id]);
-  if (!castInfo) {
+    console.log(castInfo);
+    getWork.work(castInfo.id).then((work) => {
+      setCastWork(work);
+      getBiggest.Vals(work, 4, "popularity").then((vals) => {
+        let similarActors = [];
+        vals = verifyMediaType(vals);
+        for (let v of vals) {
+          console.log(v);
+          getCast(v.id, v.media_type).then((castObj) => {
+            console.log(castObj);
+            similarActors.push(
+              castObj.cast[0].id !== castInfo.id
+                ? castObj.cast[0]
+                : castObj.cast[1],
+              castObj.cast[0].id !== castInfo.id
+                ? castObj.cast[1]
+                : castObj.cast[2]
+            );
+          });
+        }
+        setSimilarActors(similarActors);
+        console.log(similarActors);
+      });
+    });
+  }, [castInfo]);
+  if (!castInfo || !castWork) {
     return null;
   } else {
     console.log(castInfo);
@@ -80,7 +107,7 @@ const Cast = ({ castInfo }) => {
                       {checkMediaType("title", "person", castInfo)}
                     </Heading>
                   </Box>
-                  <Stat mt={16}>
+                  <Stat mt={8}>
                     <StatLabel>Birth Information</StatLabel>
                     <StatNumber>
                       {castInfo.place_of_birth
@@ -96,7 +123,7 @@ const Cast = ({ castInfo }) => {
                         : null}
                     </StatHelpText>
                   </Stat>
-                  <WCards Id={castInfo.id} />
+                  <WCards castWork={castWork} />
                 </Box>
               </GridItem>
             </SimpleGrid>
@@ -108,7 +135,8 @@ const Cast = ({ castInfo }) => {
             </Box>
           </GridItem>
           <GridItem className={styles.wrapper} colSpan={1}>
-            <Heading>Similar</Heading>
+            <Heading>Similar Cast</Heading>
+            <CastPage returnDesc="false" castData={similarActors} />
           </GridItem>
         </SimpleGrid>
       </Layout>
@@ -116,4 +144,4 @@ const Cast = ({ castInfo }) => {
   }
 };
 
-export default Cast;
+export default CastPage;

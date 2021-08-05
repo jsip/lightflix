@@ -12,7 +12,7 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const Genre = ({ genreInfo }) => {
+const GenrePage = ({ genreInfo }) => {
   const [genre, setGenre] = useState();
   useEffect(() => {
     convertGenres(undefined, genreInfo, 0).then((genre) => { setGenre(genre) });
@@ -23,4 +23,4 @@ const Genre = ({ genreInfo }) => {
   } else return <Layout>{<Box>{genre.name}</Box>}</Layout>;
 };
 
-export default Genre;
+export default GenrePage;

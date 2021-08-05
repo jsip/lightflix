@@ -34,7 +34,7 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const Movie = ({ movieInfo }) => {
+const MoviePage = ({ movieInfo }) => {
   console.log(movieInfo);
   const castToDisplay = 6;
   const [castData, setCastData] = useState();
@@ -163,4 +163,4 @@ const Movie = ({ movieInfo }) => {
     );
 };
 
-export default Movie;
+export default MoviePage;

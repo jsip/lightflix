@@ -33,7 +33,7 @@ export const getServerSideProps = async ({ params }) => {
   };
 };
 
-const Show = ({ showInfo }) => {
+const ShowPage = ({ showInfo }) => {
   console.log(showInfo);
   const castToDisplay = 6;
   const [castData, setCastData] = useState();
@@ -158,4 +158,4 @@ const Show = ({ showInfo }) => {
     );
 };
 
-export default Show;
+export default ShowPage;
