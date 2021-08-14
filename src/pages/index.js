@@ -1,4 +1,11 @@
-import { Flex, GridItem, Heading, Select, SimpleGrid } from "@chakra-ui/react";
+import {
+  Flex,
+  GridItem,
+  Heading,
+  Select,
+  SimpleGrid,
+  Wrap,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ATrending from "../common/components/ATrending";
 import Loader from "../common/components/Loader";
@@ -32,12 +39,16 @@ const Home = () => {
     getTrending(mediaType, timeframe).then((trending) => {
       setTrendingData(trending.results);
       getBiggest.Val(trending.results, "popularity").then((res) => {
-        console.log(res);
         setMostTrending(res);
       });
     });
     getPopularPeople().then((popular) => {
-      setOtherPopular(popular.results.slice(1, actorsToDisplay + 1));
+      console.log(popular);
+      setOtherPopular(
+        popular.results
+          .filter((p) => p.profile_path)
+          .slice(1, actorsToDisplay + 1)
+      );
     });
   }, [mediaType, timeframe]);
 
@@ -133,7 +144,9 @@ const Home = () => {
             </SimpleGrid>
           </GridItem>
           <GridItem>
-            {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
+            <Wrap>
+              {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
+            </Wrap>
           </GridItem>
         </SimpleGrid>
       </Layout>

@@ -47,39 +47,6 @@ const NavBar = () => {
         </Link>
       </NextLink>
       <Spacer />
-      <Spacer />
-      <NextLink href="/movies" rel="noopener noreferrer">
-        <Link className={styles.logoCont}>
-          <div className={styles.logoText}>
-            <p>Movies</p>
-          </div>
-        </Link>
-      </NextLink>
-      <Spacer />
-      <NextLink href="/shows" rel="noopener noreferrer">
-        <Link className={styles.logoCont}>
-          <div className={styles.logoText}>
-            <p>Shows</p>
-          </div>
-        </Link>
-      </NextLink>
-      <Spacer />
-      <NextLink href="/casts" rel="noopener noreferrer">
-        <Link className={styles.logoCont}>
-          <div className={styles.logoText}>
-            <p>Casts</p>
-          </div>
-        </Link>
-      </NextLink>
-      <Spacer />
-      <NextLink href="/genres" rel="noopener noreferrer">
-        <Link className={styles.logoCont}>
-          <div className={styles.logoText}>
-            <p>Genres</p>
-          </div>
-        </Link>
-      </NextLink>
-      <Spacer />
       <Box mr={4}>
         <Search
           onChangeHandler={queryHandler}

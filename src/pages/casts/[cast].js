@@ -72,6 +72,7 @@ const CastPage = ({ castInfo }) => {
   if (!castInfo || !castWork || !similarActors) {
     return null;
   } else {
+    console.log(castInfo);
     return (
       <Layout>
         <SimpleGrid columns={6} gap={8}>
@@ -80,7 +81,7 @@ const CastPage = ({ castInfo }) => {
               <GridItem colSpan={1}>
                 <Img
                   src={checkMediaType("imgSrc", "person", castInfo)}
-                  alt=""
+                  fallbacksrc={"/noMoviePoster.jpg"}
                   borderRadius="25px"
                 />
               </GridItem>

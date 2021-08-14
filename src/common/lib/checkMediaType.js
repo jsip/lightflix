@@ -36,13 +36,13 @@ const checkMediaType = (useCase, queryType, data, imgSize) => {
     case "imgSrc":
       if (queryType === "movie" || queryType === "tv") {
         return !data.poster_path
-          ? undefined
+          ? null
           : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
               data.poster_path
             }`;
       } else {
         return !data.profile_path
-          ? undefined
+          ? null
           : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
               data.profile_path
             }`;
@@ -51,13 +51,13 @@ const checkMediaType = (useCase, queryType, data, imgSize) => {
     case "imgSrcBackdrop":
       if (queryType === "movie" || queryType === "tv") {
         return !data.poster_path
-          ? undefined
+          ? null
           : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "orginal"}${
               data.backdrop_path
             }`;
       } else {
         return !data.profile_path
-          ? undefined
+          ? null
           : `https://image.tmdb.org/t/p/${imgSize ? imgSize : "w500"}${
               data.profile_path
             }`;

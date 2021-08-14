@@ -12,7 +12,6 @@ import NextLink from "next/link";
 import React from "react";
 
 const Cast = ({ castData, returnDesc, disableTooltip }) => {
-  console.log(castData);
   const castArr = castData.filter(Boolean).reduce((a, b) => {
     if (!a.find((item) => item.id === b.id)) {
       return a.concat([b]);
