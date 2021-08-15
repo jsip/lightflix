@@ -89,8 +89,8 @@ const Home = () => {
   } else
     return (
       <Layout>
-        <SimpleGrid columns={6} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={5}>
+        <SimpleGrid columns={8} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={6}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1} w="max-content">
                 <Heading fontSize="3xl">Trending</Heading>
@@ -143,7 +143,7 @@ const Home = () => {
               </GridItem>
             </SimpleGrid>
           </GridItem>
-          <GridItem>
+          <GridItem colSpan={2}>
             <Wrap>
               {otherPopular ? <ATrending otherPopular={otherPopular} /> : null}
             </Wrap>

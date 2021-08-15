@@ -21,6 +21,7 @@ import NextLink from "next/link";
 import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.scss";
 import GetRouterPath from "../utils/getRouterPath";
+import LocaleSwitch from "./LocaleSwitch";
 import SCards from "./SCards";
 import Search from "./Search";
 
@@ -78,16 +79,7 @@ const NavBar = () => {
         <MenuList>
           <MenuGroup title="Language">
             <MenuItem>
-              <RadioGroup defaultValue="2">
-                <Stack spacing={5} direction="row">
-                  <Radio colorScheme="teal" value="1">
-                    Français
-                  </Radio>
-                  <Radio colorScheme="teal" value="2">
-                    English
-                  </Radio>
-                </Stack>
-              </RadioGroup>
+            <LocaleSwitch />
             </MenuItem>
           </MenuGroup>
           <MenuDivider />
