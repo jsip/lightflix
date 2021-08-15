@@ -44,15 +44,19 @@ const GenrePage = ({ genreInfo }) => {
         getBiggest.Vals(movies.results, 10).then((movies) => {
           for (let v of movies) {
             genres.push(...v.genre_ids);
+            console.log(v);
             getCast(v.id, "movie").then((castObj) => {
-              if (castObj.cast.length > 1) {
-                setGenreActors((curr) => [
-                  ...(curr || []),
-                  castObj.cast[0],
-                  castObj.cast[1],
-                ]);
-              } else {
-                setGenreActors((curr) => [...curr]);
+              console.log(castObj);
+              if (castObj.cast) {
+                if (castObj.cast.length > 1) {
+                  setGenreActors((curr) => [
+                    ...(curr || []),
+                    castObj.cast[0],
+                    castObj.cast[1],
+                  ]);
+                } else {
+                  setGenreActors((curr) => [...curr]);
+                }
               }
             });
           }
@@ -71,14 +75,16 @@ const GenrePage = ({ genreInfo }) => {
           for (let v of shows) {
             genres.push(...v.genre_ids);
             getCast(v.id, "tv").then((castObj) => {
-              if (castObj.cast.length > 1) {
-                setGenreActors((curr) => [
-                  ...(curr || []),
-                  castObj.cast[0],
-                  castObj.cast[1],
-                ]);
-              } else {
-                setGenreActors((curr) => [...curr]);
+              if (castObj.cast) {
+                if (castObj.cast.length > 1) {
+                  setGenreActors((curr) => [
+                    ...(curr || []),
+                    castObj.cast[0],
+                    castObj.cast[1],
+                  ]);
+                } else {
+                  setGenreActors((curr) => [...curr || []]);
+                }
               }
             });
           }
@@ -106,8 +112,8 @@ const GenrePage = ({ genreInfo }) => {
     console.log(mediaGenres);
     return (
       <Layout>
-        <SimpleGrid columns={6} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={5}>
+        <SimpleGrid columns={8} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={6}>
             <Heading mb={4}>Trending {genre.name} Media</Heading>
             <SimpleGrid columns={3}>
               <GridItem colSpan={3}>
@@ -208,42 +214,42 @@ const GenrePage = ({ genreInfo }) => {
                   <Wrap spacing="5vw" justify="center" m="auto">
                     {mediaGenres
                       ? [
-                          ...mediaGenres
-                            .reduce(
-                              (map, obj) => map.set(obj.name, obj),
-                              new Map()
-                            )
-                            .values(),
-                        ].map((genre) => {
-                          return (
-                            <WrapItem key={genre.id} m={4}>
-                              <NextLink
-                                href={checkMediaType("href", "genre", genre)}
-                                as={checkMediaType("as", "genre", genre)}
-                              >
-                                <Link>
-                                  <Badge
-                                    verticalAlign="baseline"
-                                    mr={2}
-                                    p={8}
-                                    borderRadius="15px"
-                                  >
-                                    {genre.name}
-                                  </Badge>
-                                </Link>
-                              </NextLink>
-                            </WrapItem>
-                          );
-                        })
+                        ...mediaGenres
+                          .reduce(
+                            (map, obj) => map.set(obj.name, obj),
+                            new Map()
+                          )
+                          .values(),
+                      ].map((genre) => {
+                        return (
+                          <WrapItem key={genre.id} m={4}>
+                            <NextLink
+                              href={checkMediaType("href", "genre", genre)}
+                              as={checkMediaType("as", "genre", genre)}
+                            >
+                              <Link>
+                                <Badge
+                                  verticalAlign="baseline"
+                                  mr={2}
+                                  p={8}
+                                  borderRadius="15px"
+                                >
+                                  {genre.name}
+                                </Badge>
+                              </Link>
+                            </NextLink>
+                          </WrapItem>
+                        );
+                      })
                       : null}
                   </Wrap>
                 </Box>
               </GridItem>
             </SimpleGrid>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={1}>
+          <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
-              {/* <Heading>Popular {genre.name} Actors</Heading> */}
+              <Heading>Popular {genre.name} Actors</Heading>
               <Cast returnDesc="false" castData={genreActors} disableTooltip />
             </Wrap>
           </GridItem>

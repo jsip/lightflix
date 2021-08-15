@@ -69,11 +69,12 @@ const MoviePage = ({ movieInfo }) => {
   }, [movieInfo]);
   if (!castData || !directorData || !producerData) {
     return null;
-  } else
+  } else {
+    console.log(movieInfo);
     return (
       <Layout>
-        <SimpleGrid columns={6} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={1}>
+        <SimpleGrid columns={8} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
               <Heading>Cast</Heading>
               <Cast castData={castData} returnDesc={true} />
@@ -83,7 +84,7 @@ const MoviePage = ({ movieInfo }) => {
               <Cast castData={producerData} returnDesc={true} />
             </Wrap>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={5}>
+          <GridItem className={styles.wrapper} colSpan={6}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -114,7 +115,7 @@ const MoviePage = ({ movieInfo }) => {
                   <Flex mt={2} mb={8}>
                     <Box>
                       {movieInfo
-                        ? movieInfo.genres.map((genre) => (
+                        ? movieInfo.genres.slice(0, 3).map((genre) => (
                           <NextLink
                             key={genre.id}
                             href={checkMediaType("href", "genre", genre)}
@@ -161,6 +162,7 @@ const MoviePage = ({ movieInfo }) => {
         </SimpleGrid>
       </Layout>
     );
+  }
 };
 
 export default MoviePage;

@@ -9,16 +9,31 @@ import {
 	Wrap,
 	WrapItem,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Home.module.scss';
 import randElems from '../utils/getRandElems';
 import EmbeddedYT from './EmbeddedYT';
 
 const Media = ({ mostTrendingImages, mostTrendingVideos }) => {
 	const mediaMax = 3;
-	if (!mostTrendingImages || !mostTrendingVideos) {
+	const [trendingImages, setTrendingImages] = useState([]);
+
+	useEffect(() => {
+		setTrendingImages(
+			randElems
+				.getRandElemsFilter(
+					mostTrendingImages ? mostTrendingImages.posters : [],
+					mediaMax,
+					'iso_639_1',
+					'en' || 'fr',
+				)[0]
+				.slice(0, mediaMax),
+		);
+	}, [mostTrendingImages]);
+
+	if (!mostTrendingImages || !mostTrendingVideos || !trendingImages) {
 		return null;
-	} else
+	} else {
 		return (
 			<div>
 				<Tabs variant='enclosed' mt={24}>
@@ -32,19 +47,9 @@ const Media = ({ mostTrendingImages, mostTrendingVideos }) => {
 						</Tab>
 						<Tab>
 							Images (
-							{randElems.getRandElemsFilter(
-								mostTrendingImages.posters,
-								mediaMax,
-								'iso_639_1',
-								'en' || 'fr',
-							)[1].length > mediaMax
+							{trendingImages.length > mediaMax
 								? mediaMax
-								: randElems.getRandElemsFilter(
-										mostTrendingImages.posters,
-										mediaMax,
-										'iso_639_1',
-										'en' || 'fr',
-								  )[1]}
+								: trendingImages.length}
 							)
 						</Tab>
 					</TabList>
@@ -65,27 +70,18 @@ const Media = ({ mostTrendingImages, mostTrendingVideos }) => {
 						<TabPanel>
 							<Flex mt={8} justify='center'>
 								<Wrap spacing='2vw'>
-									{randElems
-										.getRandElemsFilter(
-											mostTrendingImages.posters,
-											mediaMax,
-											'iso_639_1',
-											'en' || 'fr',
-										)[0]
-										.map((img) => {
-											return (
-												<WrapItem
-													key={img.file_path.split('/')[1].split('.')[0]}
-												>
-													<Img
-														src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
-														fallbacksrc={'/noMoviePoster.jpg'}
-														alt={img.file_path}
-														className={styles.responsiveImg}
-													/>
-												</WrapItem>
-											);
-										})}
+									{trendingImages.map((img) => {
+										return (
+											<WrapItem key={img.file_path.split('/')[1].split('.')[0]}>
+												<Img
+													src={`https://image.tmdb.org/t/p/w200${img.file_path}`}
+													fallbacksrc={'/noMoviePoster.jpg'}
+													alt={img.file_path}
+													className={styles.responsiveImg}
+												/>
+											</WrapItem>
+										);
+									})}
 								</Wrap>
 							</Flex>
 						</TabPanel>
@@ -93,6 +89,7 @@ const Media = ({ mostTrendingImages, mostTrendingVideos }) => {
 				</Tabs>
 			</div>
 		);
+	}
 };
 
 export default Media;

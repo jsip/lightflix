@@ -71,8 +71,8 @@ const ShowPage = ({ showInfo }) => {
   } else
     return (
       <Layout>
-        <SimpleGrid columns={6} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={1}>
+        <SimpleGrid columns={8} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
               <Heading>Cast</Heading>
               <Cast castData={castData} returnDesc={true} />
@@ -82,7 +82,7 @@ const ShowPage = ({ showInfo }) => {
               <Cast castData={producerData} returnDesc={true} />
             </Wrap>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={5}>
+          <GridItem className={styles.wrapper} colSpan={6}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -98,9 +98,12 @@ const ShowPage = ({ showInfo }) => {
                       {checkMediaType("title", "tv", showInfo)}
                     </Heading>
                     <Heading fontSize="4xl" opacity={0.5}>
-                      <q>
-                        <i>{showInfo.tagline}</i>
-                      </q>
+                      {
+                        showInfo.tagline ?
+                          <q>
+                            <i>{showInfo.tagline}</i>
+                          </q> : null
+                      }
                     </Heading>
                   </Box>
                   <span style={{ fontSize: "3vh" }}>
@@ -110,23 +113,23 @@ const ShowPage = ({ showInfo }) => {
                   <Flex mt={2} mb={8}>
                     <Box>
                       {showInfo
-                        ? showInfo.genres.map((genre) => (
-                            <NextLink
-                              key={genre.id}
-                              href={checkMediaType("href", "genre", genre)}
-                              as={checkMediaType("as", "genre", genre)}
-                            >
-                              <Link>
-                                <Badge
-                                  verticalAlign="baseline"
-                                  key={genre.id}
-                                  mr={2}
-                                >
-                                  {genre.name}
-                                </Badge>
-                              </Link>
-                            </NextLink>
-                          ))
+                        ? showInfo.genres.slice(0, 3).map((genre) => (
+                          <NextLink
+                            key={genre.id}
+                            href={checkMediaType("href", "genre", genre)}
+                            as={checkMediaType("as", "genre", genre)}
+                          >
+                            <Link>
+                              <Badge
+                                verticalAlign="baseline"
+                                key={genre.id}
+                                mr={2}
+                              >
+                                {genre.name}
+                              </Badge>
+                            </Link>
+                          </NextLink>
+                        ))
                         : null}
                     </Box>
                     <Text fontWeight="600">

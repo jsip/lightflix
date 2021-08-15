@@ -75,8 +75,8 @@ const CastPage = ({ castInfo }) => {
     console.log(castInfo);
     return (
       <Layout>
-        <SimpleGrid columns={6} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={5}>
+        <SimpleGrid columns={8} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={6}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -138,7 +138,7 @@ const CastPage = ({ castInfo }) => {
               {formatLongP(checkMediaType("bio", "person", castInfo))}
             </Box>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={1}>
+          <GridItem className={styles.wrapper} colSpan={2}>
             <Heading>Similar Cast</Heading>
             <Wrap spacing={"3.5vh"} mt={8}>
               <Cast

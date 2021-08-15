@@ -75,15 +75,15 @@ const Home = () => {
 
   if (
     (!trendingData,
-    !mostTrending,
-    !mostTrendingInfo,
-    !otherPopular,
-    !mainGenres,
-    !mostTrendingVideos,
-    !mostTrendingImages,
-    !castData,
-    !mediaType,
-    !timeframe)
+      !mostTrending,
+      !mostTrendingInfo,
+      !otherPopular,
+      !mainGenres,
+      !mostTrendingVideos,
+      !mostTrendingImages,
+      !castData,
+      !mediaType,
+      !timeframe)
   ) {
     return null;
   } else
@@ -107,7 +107,7 @@ const Home = () => {
                   >
                     <option value="movie">Movies</option>
                     <option value="tv">Shows</option>
-                    <option value="person" disabled>
+                    <option value="person">
                       Casts
                     </option>
                   </Select>
