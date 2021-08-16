@@ -8,8 +8,8 @@ import {
   StatHelpText,
   StatLabel,
   StatNumber,
-  WrapItem,
   Text,
+  WrapItem,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
@@ -31,7 +31,7 @@ const ATrending = ({ otherPopular }) => {
               <br />
               <StatGroup>
                 <Stat>
-                  <StatLabel>Popularity Index</StatLabel>
+                  <StatLabel>Index de popularité</StatLabel>
                   <StatNumber>{actor.popularity}</StatNumber>
                   <StatHelpText>
                     <StatArrow

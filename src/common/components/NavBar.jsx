@@ -11,16 +11,14 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
-  Radio,
-  RadioGroup,
   Spacer,
-  Stack,
   Switch,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.scss";
 import GetRouterPath from "../utils/getRouterPath";
+import translatePath from "../utils/translatePath";
 import LocaleSwitch from "./LocaleSwitch";
 import SCards from "./SCards";
 import Search from "./Search";
@@ -52,9 +50,11 @@ const NavBar = () => {
         <Search
           onChangeHandler={queryHandler}
           query={query}
-          placeholder={`Search ${GetRouterPath() || "LightFlix"}`}
+          placeholder={`Recherchez ${
+            translatePath(GetRouterPath()) || "LightFlix"
+          }`}
         />
-        {!query ? `\u00A0` : `Searching for ${query}...`}
+        {!query ? `\u00A0` : `Recherche pour ${query}...`}
         {!query ? (
           ""
         ) : (
@@ -77,13 +77,13 @@ const NavBar = () => {
       <Menu closeOnSelect={false}>
         <IconButton as={MenuButton} icon={<ChevronDownIcon />}></IconButton>
         <MenuList>
-          <MenuGroup title="Language">
+          <MenuGroup title="Langages">
             <MenuItem>
-            <LocaleSwitch />
+              <LocaleSwitch />
             </MenuItem>
           </MenuGroup>
           <MenuDivider />
-          <MenuGroup title="Theme">
+          <MenuGroup title="Thème">
             <MenuItem>
               <Box>
                 <MoonIcon />

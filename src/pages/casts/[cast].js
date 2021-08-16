@@ -1,33 +1,31 @@
 import {
   Box,
+  Divider,
   Flex,
   GridItem,
   Heading,
   Img,
   SimpleGrid,
+  Stack,
   Stat,
-  StatArrow,
   StatGroup,
   StatHelpText,
   StatLabel,
   StatNumber,
-  Stack,
   Wrap,
-  Text,
-  Divider,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Cast from "../../common/components/Cast";
 import Layout from "../../common/components/Layout";
 import WCards from "../../common/components/WCards";
 import checkMediaType from "../../common/lib/checkMediaType";
-import verifyMediaType from "../../common/lib/verifyMediaType";
+import getCast from "../../common/lib/getCast";
 import getInfo from "../../common/lib/getInfo";
 import getWork from "../../common/lib/getWork";
-import styles from "../../styles/Home.module.scss";
+import verifyMediaType from "../../common/lib/verifyMediaType";
 import formatLongP from "../../common/utils/formatLongP";
 import getBiggest from "../../common/utils/getBiggest";
-import getCast from "../../common/lib/getCast";
-import Cast from "../../common/components/Cast";
+import styles from "../../styles/Home.module.scss";
 
 export const getServerSideProps = async ({ params }) => {
   const castInfo = await getInfo(params.cast, "person");
@@ -75,8 +73,8 @@ const CastPage = ({ castInfo }) => {
     console.log(castInfo);
     return (
       <Layout>
-        <SimpleGrid columns={8} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={6}>
+        <SimpleGrid columns={10} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={8}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -99,8 +97,10 @@ const CastPage = ({ castInfo }) => {
                         <Box pt={1}>
                           <Heading fontSize="2xl">
                             {castInfo.known_for_department
-                              ? `Primarily known for ${
-                                  castInfo.gender === 1 ? "her" : "his"
+                              ? `Principalement ${
+                                  castInfo.gender === 1
+                                    ? "connue pour sa carrière en"
+                                    : "connue pour sa carrière en"
                                 } ${castInfo.known_for_department.toLowerCase()}`
                               : null}
                           </Heading>
@@ -112,16 +112,16 @@ const CastPage = ({ castInfo }) => {
                     </Heading>
                   </Box>
                   <Stat mt={8} mb={12}>
-                    <StatLabel>Birth Information</StatLabel>
+                    <StatLabel>Informations</StatLabel>
                     <StatNumber>
                       {castInfo.place_of_birth
                         ? castInfo.place_of_birth
-                        : "Unknown birthplace"}
+                        : "Place de naissance inconnue"}
                     </StatNumber>
                     <StatHelpText>
                       {castInfo.birthday
                         ? new Date(castInfo.birthday).toDateString()
-                        : "Unknown birthday"}
+                        : "Date de fête inconnue"}
                       {castInfo.deathday
                         ? ` - ${new Date(castInfo.deathday).toDateString()}`
                         : null}
@@ -133,13 +133,13 @@ const CastPage = ({ castInfo }) => {
             </SimpleGrid>
             <Box mt={8}>
               <Heading fontSize="3xl" mb={4}>
-                About {castInfo.name}
+                À propos de {castInfo.name}
               </Heading>
               {formatLongP(checkMediaType("bio", "person", castInfo))}
             </Box>
           </GridItem>
           <GridItem className={styles.wrapper} colSpan={2}>
-            <Heading>Similar Cast</Heading>
+            <Heading>Crédits Similaires</Heading>
             <Wrap spacing={"3.5vh"} mt={8}>
               <Cast
                 returnDesc="false"

@@ -10,12 +10,13 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
+import lang from "../api/routeri18n";
 import checkMediaType from "../lib/checkMediaType";
 import fetchData from "../lib/fetchData";
 import API_KEY from "../utils/constants";
 
 const SCards = ({ query, clickHandler }) => {
-  let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=`;
+  let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=${lang}&query=`;
   const [searchData, setSearchData] = useState();
   useEffect(() => {
     if (query) {
@@ -26,7 +27,7 @@ const SCards = ({ query, clickHandler }) => {
   if (!searchData || !query) {
     return null;
   } else if (searchData?.results?.length === 0) {
-    return "No movies match your query";
+    return "Essayez peut-être quelque chose d'autre?";
   } else {
     return searchData?.results.map((data) => (
       <div

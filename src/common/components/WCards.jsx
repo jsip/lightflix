@@ -1,11 +1,10 @@
-import { Heading, Img, Link, Wrap, WrapItem, Badge } from "@chakra-ui/react";
+import { Badge, Heading, Img, Link, Wrap, WrapItem } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import checkMediaType from "../lib/checkMediaType";
-import getBiggest from "../utils/getBiggest";
-import getWork from "../lib/getWork";
-import verifyMediaType from "../lib/verifyMediaType";
 import convertGenres from "../lib/convertGenres";
+import verifyMediaType from "../lib/verifyMediaType";
+import getBiggest from "../utils/getBiggest";
 
 const WCards = ({ castWork }) => {
   const cardsToDisplay = 4;
@@ -40,7 +39,7 @@ const WCards = ({ castWork }) => {
     return (
       <div>
         <Heading mb={4} fontSize="3xl">
-          Notable Genres
+          Genres Notables
         </Heading>
         {genreArray
           ? genreArray.map((genre) => {
@@ -60,7 +59,7 @@ const WCards = ({ castWork }) => {
             })
           : null}
         <Heading mb={6} mt={6} fontSize="3xl">
-          Famous Roles
+          Rôles Connus
         </Heading>
         <Wrap direction="row" justify="left" spacing="2vw">
           {recommendedMovies?.map((movie, i) => (

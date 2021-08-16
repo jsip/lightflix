@@ -1,20 +1,20 @@
 .containerBg {
-	background-color: #e4ebf7bd;
-	background-image: radial-gradient(
-			at 47% 33%,
-			hsl(177, 76%, 76%) 0,
-			transparent 59%
-		),
-		radial-gradient(at 82% 65%, rgba(179, 193, 219, 0.596) 0, transparent 75%);
+  background-color: #e4ebf7bd;
+  background-image: radial-gradient(
+      at 47% 33%,
+      hsl(177, 76%, 76%) 0,
+      transparent 59%
+    ),
+    radial-gradient(at 82% 65%, rgba(179, 193, 219, 0.596) 0, transparent 75%);
 }
 
 /* Glassmorphism card effect */
 .container {
-	backdrop-filter: blur(26px) saturate(100%);
-	-webkit-backdrop-filter: blur(16px) saturate(200%);
-	background-color: rgba(232, 232, 255, 0.3);
+  backdrop-filter: blur(26px) saturate(100%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  background-color: rgba(232, 232, 255, 0.3);
 }
 
 .wrapper {
-	padding: 0 2em 2em 2em;
+  padding: 0 2em 2em 2em;
 }

@@ -7,8 +7,8 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import lang from "../common/api/routeri18n";
 import ATrending from "../common/components/ATrending";
-import Loader from "../common/components/Loader";
 import Layout from "../common/components/Layout";
 import MTrending from "../common/components/MTrending";
 import TCards from "../common/components/TCards";
@@ -34,6 +34,7 @@ const Home = () => {
   const [timeframe, setTimeframe] = useState("week");
   const actorsToDisplay = 2;
   const castToDisplay = 5;
+  lang = "fr";
 
   useEffect(() => {
     getTrending(mediaType, timeframe).then((trending) => {
@@ -43,7 +44,6 @@ const Home = () => {
       });
     });
     getPopularPeople().then((popular) => {
-      console.log(popular);
       setOtherPopular(
         popular.results
           .filter((p) => p.profile_path)
@@ -75,28 +75,28 @@ const Home = () => {
 
   if (
     (!trendingData,
-      !mostTrending,
-      !mostTrendingInfo,
-      !otherPopular,
-      !mainGenres,
-      !mostTrendingVideos,
-      !mostTrendingImages,
-      !castData,
-      !mediaType,
-      !timeframe)
+    !mostTrending,
+    !mostTrendingInfo,
+    !otherPopular,
+    !mainGenres,
+    !mostTrendingVideos,
+    !mostTrendingImages,
+    !castData,
+    !mediaType,
+    !timeframe)
   ) {
     return null;
   } else
     return (
       <Layout>
-        <SimpleGrid columns={8} gap={8}>
+        <SimpleGrid columns={8} gap={8} minChildWidth="10vw">
           <GridItem className={styles.wrapper} colSpan={6}>
-            <SimpleGrid columns={3}>
+            <SimpleGrid columns={3} minChildWidth="10vw">
               <GridItem colSpan={1} w="max-content">
-                <Heading fontSize="3xl">Trending</Heading>
+                <Heading fontSize="3xl">À la une</Heading>
                 <Flex mt={4} mb={6}>
                   <Select
-                    placeholder="Any Media"
+                    placeholder="Tout les Médias"
                     size="md"
                     name="mediaType"
                     variant="filled"
@@ -105,14 +105,12 @@ const Home = () => {
                     fontWeight="semibold"
                     onChange={(e) => setMediaType(e.target.value || "all")}
                   >
-                    <option value="movie">Movies</option>
-                    <option value="tv">Shows</option>
-                    <option value="person">
-                      Casts
-                    </option>
+                    <option value="movie">Films</option>
+                    <option value="tv">Séries</option>
+                    <option value="person">Crédits</option>
                   </Select>
                   <Select
-                    placeholder="Any Timeframe"
+                    placeholder="Toutes les Périodes"
                     name="timeframe"
                     size="md"
                     w="fit-content"
@@ -120,8 +118,8 @@ const Home = () => {
                     fontWeight="semibold"
                     onChange={(e) => setTimeframe(e.target.value || "week")}
                   >
-                    <option value="day">Today</option>
-                    <option value="week">This Week</option>
+                    <option value="day">Aujourd&apos;hui</option>
+                    <option value="week">Cette Semaine</option>
                   </Select>
                 </Flex>
                 <TCards

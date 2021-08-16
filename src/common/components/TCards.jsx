@@ -79,7 +79,11 @@ const TCards = ({ trendingData, cardHover }) => {
                       height="min-content"
                       textAlign="center"
                     >
-                      {data.media_type}
+                      {data.media_type === "movie"
+                        ? "Film"
+                        : data.media_type === "tv"
+                        ? "Série"
+                        : "Personne"}
                     </Tag>
                   </Box>
                 </Flex>

@@ -8,7 +8,7 @@ import {
   Link,
   SimpleGrid,
   Text,
-  Wrap,
+  Wrap
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { React, useEffect, useState } from "react";
@@ -71,18 +71,18 @@ const ShowPage = ({ showInfo }) => {
   } else
     return (
       <Layout>
-        <SimpleGrid columns={8} gap={8}>
+        <SimpleGrid columns={10} gap={8}>
           <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
-              <Heading>Cast</Heading>
+              <Heading>Crédits</Heading>
               <Cast castData={castData} returnDesc={true} />
-              <Heading>Directors</Heading>
+              <Heading>Directeurs</Heading>
               <Cast castData={directorData} returnDesc={true} />
-              <Heading>Producers</Heading>
+              <Heading>Réalisateurs</Heading>
               <Cast castData={producerData} returnDesc={true} />
             </Wrap>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={6}>
+          <GridItem className={styles.wrapper} colSpan={8}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -98,12 +98,11 @@ const ShowPage = ({ showInfo }) => {
                       {checkMediaType("title", "tv", showInfo)}
                     </Heading>
                     <Heading fontSize="4xl" opacity={0.5}>
-                      {
-                        showInfo.tagline ?
-                          <q>
-                            <i>{showInfo.tagline}</i>
-                          </q> : null
-                      }
+                      {showInfo.tagline ? (
+                        <q>
+                          <i>{showInfo.tagline}</i>
+                        </q>
+                      ) : null}
                     </Heading>
                   </Box>
                   <span style={{ fontSize: "3vh" }}>
@@ -114,22 +113,22 @@ const ShowPage = ({ showInfo }) => {
                     <Box>
                       {showInfo
                         ? showInfo.genres.slice(0, 3).map((genre) => (
-                          <NextLink
-                            key={genre.id}
-                            href={checkMediaType("href", "genre", genre)}
-                            as={checkMediaType("as", "genre", genre)}
-                          >
-                            <Link>
-                              <Badge
-                                verticalAlign="baseline"
-                                key={genre.id}
-                                mr={2}
-                              >
-                                {genre.name}
-                              </Badge>
-                            </Link>
-                          </NextLink>
-                        ))
+                            <NextLink
+                              key={genre.id}
+                              href={checkMediaType("href", "genre", genre)}
+                              as={checkMediaType("as", "genre", genre)}
+                            >
+                              <Link>
+                                <Badge
+                                  verticalAlign="baseline"
+                                  key={genre.id}
+                                  mr={2}
+                                >
+                                  {genre.name}
+                                </Badge>
+                              </Link>
+                            </NextLink>
+                          ))
                         : null}
                     </Box>
                     <Text fontWeight="600">
@@ -137,7 +136,7 @@ const ShowPage = ({ showInfo }) => {
                       &nbsp;&nbsp;
                       {formatRuntime(
                         checkMediaType("runtime", "tv", showInfo)
-                      ) + " (per episode)"}
+                      ) + " (par épisode)"}
                       &nbsp;&nbsp;
                       <span className={styles.releaseDateBefore}>
                         <span style={{}}>&#xB7;</span>

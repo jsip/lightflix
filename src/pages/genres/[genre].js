@@ -1,24 +1,24 @@
 import {
+  Badge,
   Box,
+  GridItem,
+  Heading,
+  Img,
+  Link,
   SimpleGrid,
   Wrap,
-  Heading,
-  GridItem,
   WrapItem,
-  Link,
-  Img,
-  Badge,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
 import NextLink from "next/link";
+import React, { useEffect, useState } from "react";
+import Cast from "../../common/components/Cast";
 import Layout from "../../common/components/Layout";
+import checkMediaType from "../../common/lib/checkMediaType";
 import convertGenres from "../../common/lib/convertGenres";
+import getCast from "../../common/lib/getCast";
 import getMediaByGenre from "../../common/lib/getMediaByGenre";
 import getBiggest from "../../common/utils/getBiggest";
 import styles from "../../styles/Home.module.scss";
-import getCast from "../../common/lib/getCast";
-import checkMediaType from "../../common/lib/checkMediaType";
-import Cast from "../../common/components/Cast";
 
 export const getServerSideProps = async ({ params }) => {
   const genreInfo = params.genre;
@@ -83,7 +83,7 @@ const GenrePage = ({ genreInfo }) => {
                     castObj.cast[1],
                   ]);
                 } else {
-                  setGenreActors((curr) => [...curr || []]);
+                  setGenreActors((curr) => [...(curr || [])]);
                 }
               }
             });
@@ -112,14 +112,14 @@ const GenrePage = ({ genreInfo }) => {
     console.log(mediaGenres);
     return (
       <Layout>
-        <SimpleGrid columns={8} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={6}>
-            <Heading mb={4}>Trending {genre.name} Media</Heading>
+        <SimpleGrid columns={10} gap={8}>
+          <GridItem className={styles.wrapper} colSpan={8}>
+            <Heading mb={4}>Médias de {genre.name} à la Une</Heading>
             <SimpleGrid columns={3}>
               <GridItem colSpan={3}>
                 <Box>
                   <Heading fontSize="xl" mt={6} mb={6}>
-                    {moviesFromGenre.length > 0 ? "Movies" : null}
+                    {moviesFromGenre.length > 0 ? "Films" : null}
                   </Heading>
                   <Wrap spacing="2vw">
                     {moviesFromGenre.map((movie, i) => {
@@ -164,7 +164,7 @@ const GenrePage = ({ genreInfo }) => {
                 </Box>
                 <Box>
                   <Heading fontSize="xl" mt={6} mb={6}>
-                    {showsFromGenre.length > 0 ? "Shows" : null}
+                    {showsFromGenre.length > 0 ? "Séries" : null}
                   </Heading>
                   <Wrap spacing="2vw">
                     {showsFromGenre.map((show, i) => {
@@ -209,47 +209,50 @@ const GenrePage = ({ genreInfo }) => {
                 </Box>
                 <Box>
                   <Heading mt={12} mb={12}>
-                    Recommended Genres for {genre.name}
+                    Genres recommendés pour les{" "}
+                    <span style={{ textTransform: "lowercase" }}>
+                      {genre.name}s
+                    </span>
                   </Heading>
                   <Wrap spacing="5vw" justify="center" m="auto">
                     {mediaGenres
                       ? [
-                        ...mediaGenres
-                          .reduce(
-                            (map, obj) => map.set(obj.name, obj),
-                            new Map()
-                          )
-                          .values(),
-                      ].map((genre) => {
-                        return (
-                          <WrapItem key={genre.id} m={4}>
-                            <NextLink
-                              href={checkMediaType("href", "genre", genre)}
-                              as={checkMediaType("as", "genre", genre)}
-                            >
-                              <Link>
-                                <Badge
-                                  verticalAlign="baseline"
-                                  mr={2}
-                                  p={8}
-                                  borderRadius="15px"
-                                >
-                                  {genre.name}
-                                </Badge>
-                              </Link>
-                            </NextLink>
-                          </WrapItem>
-                        );
-                      })
+                          ...mediaGenres
+                            .reduce(
+                              (map, obj) => map.set(obj.name, obj),
+                              new Map()
+                            )
+                            .values(),
+                        ].map((genre) => {
+                          return (
+                            <WrapItem key={genre.id} m={4}>
+                              <NextLink
+                                href={checkMediaType("href", "genre", genre)}
+                                as={checkMediaType("as", "genre", genre)}
+                              >
+                                <Link>
+                                  <Badge
+                                    verticalAlign="baseline"
+                                    mr={2}
+                                    p={8}
+                                    borderRadius="15px"
+                                  >
+                                    {genre.name}
+                                  </Badge>
+                                </Link>
+                              </NextLink>
+                            </WrapItem>
+                          );
+                        })
                       : null}
                   </Wrap>
                 </Box>
               </GridItem>
             </SimpleGrid>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={2}>
+          <GridItem className={styles.wrapper} colStart={9} colSpan={2}>
             <Wrap direction="column" spacing={6}>
-              <Heading>Popular {genre.name} Actors</Heading>
+              <Heading>Acteurs Populaires de {genre.name}</Heading>
               <Cast returnDesc="false" castData={genreActors} disableTooltip />
             </Wrap>
           </GridItem>

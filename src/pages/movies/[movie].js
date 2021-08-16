@@ -73,18 +73,18 @@ const MoviePage = ({ movieInfo }) => {
     console.log(movieInfo);
     return (
       <Layout>
-        <SimpleGrid columns={8} gap={8}>
+        <SimpleGrid columns={10} gap={8}>
           <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
-              <Heading>Cast</Heading>
+              <Heading>Crédits</Heading>
               <Cast castData={castData} returnDesc={true} />
-              <Heading>Directors</Heading>
+              <Heading>Directeurs</Heading>
               <Cast castData={directorData} returnDesc={true} />
-              <Heading>Producers</Heading>
+              <Heading>Réalisateurs</Heading>
               <Cast castData={producerData} returnDesc={true} />
             </Wrap>
           </GridItem>
-          <GridItem className={styles.wrapper} colSpan={6}>
+          <GridItem className={styles.wrapper} colSpan={8}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
                 <Img
@@ -101,11 +101,11 @@ const MoviePage = ({ movieInfo }) => {
                       {checkMediaType("title", "movie", movieInfo)}
                     </Heading>
                     <Heading fontSize="4xl" opacity={0.5}>
-                      {movieInfo.tagline ?
+                      {movieInfo.tagline ? (
                         <q>
                           <i>{movieInfo.tagline}</i>
                         </q>
-                        : null}
+                      ) : null}
                     </Heading>
                   </Box>
                   <span style={{ fontSize: "3vh" }}>
@@ -116,26 +116,26 @@ const MoviePage = ({ movieInfo }) => {
                     <Box>
                       {movieInfo
                         ? movieInfo.genres.slice(0, 3).map((genre) => (
-                          <NextLink
-                            key={genre.id}
-                            href={checkMediaType("href", "genre", genre)}
-                            as={checkMediaType("as", "genre", genre)}
-                          >
-                            <Link>
-                              <Badge
-                                verticalAlign="baseline"
-                                key={genre.id}
-                                mr={2}
-                              >
-                                {genre.name}
-                              </Badge>
-                            </Link>
-                          </NextLink>
-                        ))
+                            <NextLink
+                              key={genre.id}
+                              href={checkMediaType("href", "genre", genre)}
+                              as={checkMediaType("as", "genre", genre)}
+                            >
+                              <Link>
+                                <Badge
+                                  verticalAlign="baseline"
+                                  key={genre.id}
+                                  mr={2}
+                                >
+                                  {genre.name}
+                                </Badge>
+                              </Link>
+                            </NextLink>
+                          ))
                         : null}
-                      {movieInfo.genres.length > 0 ?
+                      {movieInfo.genres.length > 0 ? (
                         <span style={{ fontWeight: "800" }}>-&nbsp;&nbsp;</span>
-                        : null}
+                      ) : null}
                     </Box>
                     <Text fontWeight="600">
                       {formatRuntime(
@@ -157,7 +157,11 @@ const MoviePage = ({ movieInfo }) => {
                 </Box>
               </GridItem>
             </SimpleGrid>
-            <RCards mediaType={"movie"} Id={movieInfo.id} fallbackId={"379686"} />
+            <RCards
+              mediaType={"movie"}
+              Id={movieInfo.id}
+              fallbackId={"379686"}
+            />
           </GridItem>
         </SimpleGrid>
       </Layout>
