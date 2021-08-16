@@ -91,7 +91,7 @@ const Home = () => {
       <Layout>
         <SimpleGrid columns={8} gap={8} minChildWidth="10vw">
           <GridItem className={styles.wrapper} colSpan={6}>
-            <SimpleGrid columns={3} minChildWidth="10vw">
+            <SimpleGrid columns={3}>
               <GridItem colSpan={1} w="max-content">
                 <Heading fontSize="3xl">À la une</Heading>
                 <Flex mt={4} mb={6}>

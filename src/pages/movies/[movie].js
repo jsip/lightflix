@@ -6,6 +6,7 @@ import {
   Heading,
   Img,
   Link,
+  WrapItem,
   SimpleGrid,
   Text,
   Wrap,
@@ -73,7 +74,92 @@ const MoviePage = ({ movieInfo }) => {
     console.log(movieInfo);
     return (
       <Layout>
-        <SimpleGrid columns={10} gap={8}>
+        <SimpleGrid
+          columns={10}
+          gap={8}
+          minChildWidth="7.5vw"
+        >
+          <GridItem className={styles.wrapper} colSpan={8}>
+            <Wrap direction="row" spacing="1vw">
+              <WrapItem>
+                <Img
+                  src={checkMediaType("imgSrc", "movie", movieInfo)}
+                  fallbacksrc={"/noMoviePoster.jpg"}
+                  alt=""
+                  borderRadius="25px"
+                />
+                <WrapItem>
+                  <Box ml={8}>
+                    <Box mb={12}>
+                      <Heading fontSize="5xl">
+                        {checkMediaType("title", "movie", movieInfo)}
+                      </Heading>
+                      <Heading fontSize="4xl" opacity={0.5}>
+                        {movieInfo.tagline ? (
+                          <q>
+                            <i>{movieInfo.tagline}</i>
+                          </q>
+                        ) : null}
+                      </Heading>
+                    </Box>
+                    <span style={{ fontSize: "3vh" }}>
+                      {"★".repeat(Math.ceil(movieInfo.vote_average / 2)) +
+                        "☆".repeat(5 - Math.ceil(movieInfo.vote_average / 2))}
+                    </span>
+                    <Flex mt={2} mb={8}>
+                      <Box>
+                        {movieInfo
+                          ? movieInfo.genres.slice(0, 3).map((genre) => (
+                              <NextLink
+                                key={genre.id}
+                                href={checkMediaType("href", "genre", genre)}
+                                as={checkMediaType("as", "genre", genre)}
+                              >
+                                <Link>
+                                  <Badge
+                                    verticalAlign="baseline"
+                                    key={genre.id}
+                                    mr={2}
+                                  >
+                                    {genre.name}
+                                  </Badge>
+                                </Link>
+                              </NextLink>
+                            ))
+                          : null}
+                        {movieInfo.genres.length > 0 ? (
+                          <span style={{ fontWeight: "800" }}>
+                            -&nbsp;&nbsp;
+                          </span>
+                        ) : null}
+                      </Box>
+                      <Text fontWeight="600">
+                        {formatRuntime(
+                          checkMediaType("runtime", "movie", movieInfo)
+                        )}
+                        &nbsp;&nbsp;
+                        <span className={styles.releaseDateBefore}>
+                          <span style={{}}>&#xB7;</span>
+                          &nbsp;
+                          {checkMediaType("releaseDate", "movie", movieInfo)}
+                        </span>
+                      </Text>
+                    </Flex>
+                    <Box>{checkMediaType("desc", "movie", movieInfo)}</Box>
+                    <Media
+                      mostTrendingImages={mostTrendingImages}
+                      mostTrendingVideos={mostTrendingVideos}
+                    />
+                  </Box>
+                </WrapItem>
+              </WrapItem>
+            </Wrap>
+            <RCards
+              mediaType={"movie"}
+              Id={movieInfo.id}
+              fallbackId={"379686"}
+            />
+          </GridItem>
           <GridItem className={styles.wrapper} colSpan={2}>
             <Wrap direction="column" spacing={6}>
               <Heading>Crédits</Heading>
@@ -83,85 +169,6 @@ const MoviePage = ({ movieInfo }) => {
               <Heading>Réalisateurs</Heading>
               <Cast castData={producerData} returnDesc={true} />
             </Wrap>
-          </GridItem>
-          <GridItem className={styles.wrapper} colSpan={8}>
-            <SimpleGrid columns={3}>
-              <GridItem colSpan={1}>
-                <Img
-                  src={checkMediaType("imgSrc", "movie", movieInfo)}
-                  fallbacksrc={"/noMoviePoster.jpg"}
-                  alt=""
-                  borderRadius="25px"
-                />
-              </GridItem>
-              <GridItem colSpan={2}>
-                <Box ml={8}>
-                  <Box mb={12}>
-                    <Heading fontSize="5xl">
-                      {checkMediaType("title", "movie", movieInfo)}
-                    </Heading>
-                    <Heading fontSize="4xl" opacity={0.5}>
-                      {movieInfo.tagline ? (
-                        <q>
-                          <i>{movieInfo.tagline}</i>
-                        </q>
-                      ) : null}
-                    </Heading>
-                  </Box>
-                  <span style={{ fontSize: "3vh" }}>
-                    {"★".repeat(Math.ceil(movieInfo.vote_average / 2)) +
-                      "☆".repeat(5 - Math.ceil(movieInfo.vote_average / 2))}
-                  </span>
-                  <Flex mt={2} mb={8}>
-                    <Box>
-                      {movieInfo
-                        ? movieInfo.genres.slice(0, 3).map((genre) => (
-                            <NextLink
-                              key={genre.id}
-                              href={checkMediaType("href", "genre", genre)}
-                              as={checkMediaType("as", "genre", genre)}
-                            >
-                              <Link>
-                                <Badge
-                                  verticalAlign="baseline"
-                                  key={genre.id}
-                                  mr={2}
-                                >
-                                  {genre.name}
-                                </Badge>
-                              </Link>
-                            </NextLink>
-                          ))
-                        : null}
-                      {movieInfo.genres.length > 0 ? (
-                        <span style={{ fontWeight: "800" }}>-&nbsp;&nbsp;</span>
-                      ) : null}
-                    </Box>
-                    <Text fontWeight="600">
-                      {formatRuntime(
-                        checkMediaType("runtime", "movie", movieInfo)
-                      )}
-                      &nbsp;&nbsp;
-                      <span className={styles.releaseDateBefore}>
-                        <span style={{}}>&#xB7;</span>
-                        &nbsp;
-                        {checkMediaType("releaseDate", "movie", movieInfo)}
-                      </span>
-                    </Text>
-                  </Flex>
-                  <Box>{checkMediaType("desc", "movie", movieInfo)}</Box>
-                  <Media
-                    mostTrendingImages={mostTrendingImages}
-                    mostTrendingVideos={mostTrendingVideos}
-                  />
-                </Box>
-              </GridItem>
-            </SimpleGrid>
-            <RCards
-              mediaType={"movie"}
-              Id={movieInfo.id}
-              fallbackId={"379686"}
-            />
           </GridItem>
         </SimpleGrid>
       </Layout>

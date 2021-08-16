@@ -8,7 +8,7 @@ import {
   Link,
   SimpleGrid,
   Text,
-  Wrap
+  Wrap,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { React, useEffect, useState } from "react";
@@ -72,16 +72,6 @@ const ShowPage = ({ showInfo }) => {
     return (
       <Layout>
         <SimpleGrid columns={10} gap={8}>
-          <GridItem className={styles.wrapper} colSpan={2}>
-            <Wrap direction="column" spacing={6}>
-              <Heading>Crédits</Heading>
-              <Cast castData={castData} returnDesc={true} />
-              <Heading>Directeurs</Heading>
-              <Cast castData={directorData} returnDesc={true} />
-              <Heading>Réalisateurs</Heading>
-              <Cast castData={producerData} returnDesc={true} />
-            </Wrap>
-          </GridItem>
           <GridItem className={styles.wrapper} colSpan={8}>
             <SimpleGrid columns={3}>
               <GridItem colSpan={1}>
@@ -154,6 +144,16 @@ const ShowPage = ({ showInfo }) => {
               </GridItem>
             </SimpleGrid>
             <RCards mediaType={"tv"} Id={showInfo.id} />
+          </GridItem>
+          <GridItem className={styles.wrapper} colSpan={2}>
+            <Wrap direction="column" spacing={6}>
+              <Heading>Crédits</Heading>
+              <Cast castData={castData} returnDesc={true} />
+              <Heading>Directeurs</Heading>
+              <Cast castData={directorData} returnDesc={true} />
+              <Heading>Réalisateurs</Heading>
+              <Cast castData={producerData} returnDesc={true} />
+            </Wrap>
           </GridItem>
         </SimpleGrid>
       </Layout>
