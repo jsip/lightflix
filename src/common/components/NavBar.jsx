@@ -17,7 +17,7 @@ import {
 import NextLink from "next/link";
 import React, { useState } from "react";
 import styles from "../../styles/NavBar.module.scss";
-import GetRouterPath from "../utils/getRouterPath";
+import GetRouterPath from "../utils/GetRouterPath";
 import translatePath from "../utils/translatePath";
 import LocaleSwitch from "./LocaleSwitch";
 import SCards from "./SCards";
